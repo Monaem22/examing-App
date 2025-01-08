@@ -1,4 +1,4 @@
-const httpText = require("./httpText");
+const httpText = require("../middlewares/httpText");
 
 class ApiError extends Error {
   constructor(msg, code, err = undefined) {
