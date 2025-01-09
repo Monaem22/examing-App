@@ -1,4 +1,4 @@
-const httpText = require("./httpText");
+const httpText = require("../utils/httpText");
 
 module.exports = (er, req, res, next) => {
   if (process.env.MODE === "dev") {

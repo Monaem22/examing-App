@@ -1,7 +1,7 @@
 const asyncHandler = require("../middlewares/asyncHandler");
 const usersDB = require("../models/user.model");
 const ApiError = require("../utils/apiError");
-
+const sendResponse = require("../utils/response");
 exports.addStudent = asyncHandler(async (req, res, next) => {
   const { name, gender, grade, studentMobile, parentMobile } = req.body;
   const { user } = req.user;
@@ -20,5 +20,5 @@ exports.addStudent = asyncHandler(async (req, res, next) => {
     parentMobile,
   });
 
-  res.status(201).json(userDoc);
+  return sendResponse(res, 201, "User created successfully");
 });
