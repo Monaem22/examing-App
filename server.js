@@ -5,8 +5,8 @@ const helmet = require("helmet");
 const compression = require("compression");
 const cookieParser = require("cookie-parser");
 const dbConnection = require("./config/DB_connection");
-const apiError = require("./utils/apiError");
-const adminRoute = require("./routes/admin.route");
+const apiError = require("./utils/apiError.js");
+const adminRoute = require("./routes/admin.route.js");
 const error = require("./middlewares/error");
 const app = express();
 dotenv.config();
@@ -19,12 +19,12 @@ app.use(cookieParser());
 app.use(compression());
 app.use(helmet());
 
-app.all("*", (req, res, next) => {
-  return next(
-    new apiError(`cant find this route ${req.originalUrl}`, 404, TYPE.FIELD)
-  );
-});
 app.use("/api/admin", adminRoute);
+
+app.all("*", (req, res, next) => {
+  return next(new apiError(`cant find this route ${req.originalUrl}`, 404));
+});
+
 app.use(error);
 
 app.listen(process.env.PORT || 2000, process.env.HOST, () => {

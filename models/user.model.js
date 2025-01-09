@@ -1,14 +1,12 @@
-
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const users_Schema = new mongoose.Schema({   
-
-    Name: {
+    name: {
         type: String,
         required:  [true,'student must have Name.'],
     },
-    Gender: {
+    gender: {
         type: String,
         enum: ['ذكر', 'انثي'],
     },
@@ -24,7 +22,7 @@ const users_Schema = new mongoose.Schema({
         type: String,
         unique: [true,'student must have unique code.'],
     },
-    gmile_Account: String,
+    gmail_Account: String,
     exams: [{
         type: mongoose.Schema.Types.ObjectId ,
         ref: 'exams_table' ,
@@ -38,7 +36,7 @@ const users_Schema = new mongoose.Schema({
     password: String,
     role: {
         type: String,
-        enum: ['student', 'asistant', 'admin'],
+        enum: ['student', 'assistant', 'admin'],
         default: 'student'
     },
 
