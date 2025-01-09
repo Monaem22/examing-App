@@ -20,5 +20,8 @@ exports.addStudent = asyncHandler(async (req, res, next) => {
     parentMobile,
   });
 
+  if (!userDoc)
+    return next(new ApiError("An error occurred when creating user", 400));
+
   return sendResponse(res, 201, "User created successfully");
 });
