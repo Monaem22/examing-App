@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const dbConnection = require("./config/DB_connection");
 const apiError = require("./utils/apiError.js");
 const adminRoute = require("./routes/admin.route.js");
+const userRoute = require("./routes/user.route.js");
 const error = require("./middlewares/error");
 const app = express();
 dotenv.config();
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compression());
 app.use(helmet());
-
+app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
 
 app.all("*", (req, res, next) => {

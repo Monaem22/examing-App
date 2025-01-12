@@ -5,9 +5,9 @@ const asyncHandler = require("./asyncHandler");
 const verifyToken = asyncHandler(async (req, res, next) => {
   if (req.cookies["accessToken"]) {
     const Auth = req.cookies["accessToken"];
-    jwt.verify(Auth, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
+    jwt.verify(Auth, process.env.SECRET_KEY_JWT, async (err, user) => {
       if (err) return next(new ApiError("Token is not valid or expired ", 401));
-      req.user = user;
+      req.uerId = user.id;
       return next();
     });
   } else {
