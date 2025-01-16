@@ -25,3 +25,21 @@ exports.addStudent = asyncHandler(async (req, res, next) => {
 
   return sendResponse(res, 201, "User created successfully");
 });
+
+exports.getAllStudents = asyncHandler(async (req, res, next) => {
+  try {
+    const Students = await db.find();
+    return sendResponse(res, 200, Students);
+  } catch (err) {
+    next(new ApiError("Not Found", 404));
+  }
+});
+
+exports.getOneStudent = asyncHandler(async (req, res, next) => {
+  try {
+    const Student = await db.findById(req.params.id);
+    return sendResponse(res, 200, Student);
+  } catch (err) {
+    next(new ApiError("Not Found", 404));
+  }
+});
