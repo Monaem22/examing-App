@@ -44,4 +44,4 @@ admin_schema.pre("findOneAndUpdate", async function (next) {
   )),
     next();
 });
-module.exports = mongoose.model("admin", admin_schema);
+module.exports = mongoose.model("admins", admin_schema);
