@@ -4,13 +4,13 @@ const apiError = require("../utils/apiError");
 const Auth = asyncHandler(async (req, res, next) => {
   const admin = await db.findById(req.userId).select("role");
   admin ? admin : next(new apiError("unAuthenticated", 401));
-  // const role = [...admin.role];
-  // console.log(role);
-  // console.log(req.URL);
-  // authorized = Boolean(role.includes(req.URL.split("/")[2]));
-  // if (!authorized) {
-  //   return next(new apiError("UnAuthorized", 401));
-  // }
+  const role = [...admin.role];
+  console.log(role);
+  console.log(req.URL);
+  authorized = Boolean(role.includes(req.URL.split("/")[2]));
+  if (!authorized) {
+    return next(new apiError("UnAuthorized", 401));
+  }
   next();
 });
 exports.Auth = Auth;

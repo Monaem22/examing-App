@@ -63,7 +63,7 @@ const users_Schema = new mongoose.Schema(
   }
 );
 
-users_Schema.index({ student_code: 1 }, { unique: true });
+// users_Schema.index({ student_code: 1 }, { unique: true });
 
 users_Schema.pre("save", async function (next) {
   const isModified = this.isModified("password");
