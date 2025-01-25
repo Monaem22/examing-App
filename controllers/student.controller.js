@@ -25,7 +25,35 @@ exports.addStudent = asyncHandler(async (req, res, next) => {
     return next(new ApiError("An error occurred when creating user", 400));
   }
 
-  return sendResponse(res, 201, "User created successfully");
+  return sendResponse(res, 201, "Student created successfully");
+});
+
+exports.updateStudent = asyncHandler(async (req, res, next) => {
+  const { name, gender, grade, studentMobile, parentMobile } = req.body;
+  const { studentId } = req.params;
+
+  if (!req.body) return next(new ApiError("No changes", 400));
+
+  const studentDoc = await usersDB.findByIdAndUpdate(studentId, {
+    name,
+    gender,
+    grade,
+    studentMobile,
+    parentMobile,
+  });
+
+  if (!studentDoc) return next(new ApiError("Student not found", 404));
+
+  return sendResponse(res, 200, "Student updated successfully");
+});
+
+exports.deleteStudent = asyncHandler(async (req, res, next) => {
+  const { studentId } = req.params;
+
+  const student = await usersDB.findByIdAndDelete(studentId);
+  if (!student) return next(new ApiError("Student not found", 404));
+
+  return sendResponse(res, 200, "Student deleted successfully");
 });
 
 exports.getAllStudents = asyncHandler(async (req, res, next) => {

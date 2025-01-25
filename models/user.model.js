@@ -29,13 +29,13 @@ const users_Schema = new mongoose.Schema(
       ],
     },
     address: String,
-    student_mobile: String,
-    parent_mobile: String,
+    studentMobile: String,
+    parentMobile: String,
     group: String,
-    student_code: {
-      type: String,
-      unique: [true, "student must have unique code."],
-    },
+    // student_code: {
+    //   type: String,
+    //   unique: [true, "student must have unique code."],
+    // },
     gmail_Account: String,
     exams: [
       {
@@ -45,10 +45,10 @@ const users_Schema = new mongoose.Schema(
       },
     ],
     //admin
-    email: {
-      type: String,
-      unique: [true, "user must have unique email."],
-    },
+    // email: {
+    //   type: String,
+    //   unique: [true, "user must have unique email."],
+    // },
     password: String,
     // The student cannot own roll at present
     // role: {
