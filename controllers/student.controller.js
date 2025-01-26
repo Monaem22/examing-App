@@ -58,7 +58,7 @@ exports.deleteStudent = asyncHandler(async (req, res, next) => {
 
 exports.getAllStudents = asyncHandler(async (req, res, next) => {
   try {
-    const Students = await db.find();
+    const Students = await usersDB.find();
     return sendResponse(res, 200, Students);
   } catch (err) {
     next(new ApiError("Not Found", 404));
@@ -67,7 +67,7 @@ exports.getAllStudents = asyncHandler(async (req, res, next) => {
 
 exports.getOneStudent = asyncHandler(async (req, res, next) => {
   try {
-    const Student = await db.findById(req.params.id);
+    const Student = await usersDB.findById(req.params.id);
     return sendResponse(res, 200, Student);
   } catch (err) {
     next(new ApiError("Not Found", 404));
