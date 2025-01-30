@@ -27,7 +27,29 @@ exports.addStudent = asyncHandler(async (req, res, next) => {
   return sendResponse(res, 201, "Student created successfully");
 });
 
-exports.updateStudent = asyncHandler(async (req, res, next) => {
+exports.putUpdateStudent = asyncHandler(async (req, res, next) => {
+  const { name, grade, studentMobile, parentMobile } = req.body;
+  const { studentId } = req.params;
+
+  if (!req.body) return next(new ApiError("No changes", 400));
+
+  const studentDoc = await usersDB.findByIdAndUpdate(
+    studentId,
+    {
+      name,
+      grade,
+      studentMobile,
+      parentMobile,
+    },
+    { new: true, runValidators: true }
+  );
+
+  if (!studentDoc) return next(new ApiError("Student not found", 404));
+
+  return sendResponse(res, 200, "Student updated successfully");
+});
+
+exports.patchUpdateStudent = asyncHandler(async (req, res, next) => {
   const { name, grade, studentMobile, parentMobile } = req.body;
   const { studentId } = req.params;
 
