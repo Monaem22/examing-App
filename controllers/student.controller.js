@@ -4,7 +4,7 @@ const ApiError = require("../utils/apiError");
 const sendResponse = require("../utils/response");
 
 exports.addStudent = asyncHandler(async (req, res, next) => {
-  const { name, gender, grade, studentMobile, parentMobile } = req.body;
+  const { name, grade, studentMobile, parentMobile } = req.body;
   const userId = req.userId;
 
   if (!userId) return next(new ApiError("User not found", 404));
@@ -15,7 +15,6 @@ exports.addStudent = asyncHandler(async (req, res, next) => {
 
   const userDoc = await usersDB.create({
     name,
-    gender,
     grade,
     studentMobile,
     parentMobile,
@@ -29,7 +28,7 @@ exports.addStudent = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateStudent = asyncHandler(async (req, res, next) => {
-  const { name, gender, grade, studentMobile, parentMobile } = req.body;
+  const { name, grade, studentMobile, parentMobile } = req.body;
   const { studentId } = req.params;
 
   if (!req.body) return next(new ApiError("No changes", 400));
@@ -38,7 +37,6 @@ exports.updateStudent = asyncHandler(async (req, res, next) => {
     studentId,
     {
       name,
-      gender,
       grade,
       studentMobile,
       parentMobile,
