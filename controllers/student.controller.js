@@ -34,13 +34,17 @@ exports.updateStudent = asyncHandler(async (req, res, next) => {
 
   if (!req.body) return next(new ApiError("No changes", 400));
 
-  const studentDoc = await usersDB.findByIdAndUpdate(studentId, {
-    name,
-    gender,
-    grade,
-    studentMobile,
-    parentMobile,
-  });
+  const studentDoc = await usersDB.findByIdAndUpdate(
+    studentId,
+    {
+      name,
+      gender,
+      grade,
+      studentMobile,
+      parentMobile,
+    },
+    { new: true, runValidators: true }
+  );
 
   if (!studentDoc) return next(new ApiError("Student not found", 404));
 
