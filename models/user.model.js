@@ -7,10 +7,6 @@ const users_Schema = new mongoose.Schema(
       type: String,
       required: [true, "student must have Name."],
     },
-    gender: {
-      type: String,
-      enum: ["ذكر", "انثي"],
-    },
     grade: {
       type: String,
       enum: [
