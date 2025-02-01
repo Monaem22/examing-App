@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const ApiError = require("../utils/apiError");
 
-admin_schema = new mongoose.Schema(
+const admin_schema = new mongoose.Schema(
   {
     userName: {
       type: String,
@@ -33,7 +32,7 @@ admin_schema = new mongoose.Schema(
 admin_schema.pre("save", async function (next) {
   const isModified = this.isModified("password");
   if (!isModified) return next();
-  this.password = await bcrypt.hash(this.password, 12);
+  this.password = bcrypt.hash(this.password, 12);
   next();
 });
 admin_schema.pre("findOneAndUpdate", async function (next) {
@@ -44,4 +43,7 @@ admin_schema.pre("findOneAndUpdate", async function (next) {
   )),
     next();
 });
-module.exports = mongoose.model("admins", admin_schema);
+
+const adminDB = mongoose.model("admins", admin_schema);
+
+module.exports = adminDB;
