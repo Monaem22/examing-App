@@ -32,7 +32,7 @@ const admin_schema = new mongoose.Schema(
 admin_schema.pre("save", async function (next) {
   const isModified = this.isModified("password");
   if (!isModified) return next();
-  this.password = bcrypt.hash(this.password, 12);
+  this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 admin_schema.pre("findOneAndUpdate", async function (next) {

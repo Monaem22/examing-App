@@ -32,9 +32,13 @@ exports.login = asyncHandler(async (req, res, next) => {
       return next(new apiError("Invalid username or password", 404));
     }
   }
-  const token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY_JWT, {
-    expiresIn: process.env.EXPIRE_JWT_AUTH,
-  });
+  const token = jwt.sign(
+    { id: admin._id, userName: admin.userName },
+    process.env.SECRET_KEY_JWT,
+    {
+      expiresIn: process.env.EXPIRE_JWT_AUTH,
+    }
+  );
   const expirationDate = new Date();
   expirationDate.setHours(expirationDate.getHours() + 2);
   res.cookie("accessToken", `${token}`, {
@@ -47,32 +51,48 @@ exports.login = asyncHandler(async (req, res, next) => {
     });
 });
 exports.getAll = asyncHandler(async (req, res, next) => {
-  const admins = await adminDB
-    .find({ userName: { $ne: "Elshirbini" } })
-    .select("userName role");
+  let query = {};
+
+  if (!req.isSuperAdmin) {
+    query = { userName: { $ne: "01011638721" } };
+  }
+
+  const admins = await adminDB.find(query).select("userName role");
+
   return sendResponse(res, 200, admins);
 });
 exports.getOne = asyncHandler(async (req, res, next) => {
   try {
-    admin = await adminDB.findById(req.params.id).select("userName  _id role");
-    if (admin.userName === "Elshirbini") {
-      return next(new ApiError("You do not have the ability to modify the super admin",403));
+    const admin = await adminDB
+      .findById(req.params.id)
+      .select("userName _id role");
+
+    if (admin.userName === "01011638721" && !req.isSuperAdmin) {
+      return next(
+        new ApiError(
+          "You do not have the ability to view or modify the super admin",
+          403
+        )
+      );
     }
+
+    return sendResponse(res, 200, admin);
   } catch (err) {
-    next(new apiError("Not Found", 404));
+    return next(new ApiError("Not Found", 404));
   }
-  return sendResponse(res, 200, admin);
 });
 exports.update = asyncHandler(async (req, res, next) => {
   let { userName, role, password } = req.body;
 
-  if (userName === "Elshirbini") {
-    return next(new ApiError("You do not have the ability to modify the super admin",403));
+  if (userName === "01011638721" && !req.isSuperAdmin) {
+    return next(
+      new ApiError("You do not have the ability to modify the super admin", 403)
+    );
   }
 
   await adminDB.findByIdAndUpdate(
     req.params.id,
-    { userName , password, role  },
+    { userName, password, role },
     { new: true, runValidators: true }
   );
   return sendResponse(res, 200, "Updated successfully");
@@ -83,11 +103,16 @@ exports.delete = asyncHandler(async (req, res, next) => {
     try {
       const admin = await adminDB.findById(req.params.id).select("userName");
 
-      if (admin.userName === "Elshirbini") {
-        return next(new ApiError("You do not have the ability to modify the super admin",403));
+      if (admin.userName === "01011638721" && !req.isSuperAdmin) {
+        return next(
+          new ApiError(
+            "You do not have the ability to delete the super admin",
+            403
+          )
+        );
       }
 
-      await adminDB.deleteOne({id : req.params.id})
+      await adminDB.deleteOne({ id: req.params.id });
 
       return sendResponse(res, 200, "Deleted successfully");
     } catch (err) {
@@ -97,8 +122,13 @@ exports.delete = asyncHandler(async (req, res, next) => {
     // delete by uerName
     const { username } = req.query;
 
-    if (username === "Elshirbini") {
-      return next(new ApiError("You do not have the ability to modify the super admin",403));
+    if (username === "01011638721" && !req.isSuperAdmin) {
+      return next(
+        new ApiError(
+          "You do not have the ability to delete the super admin",
+          403
+        )
+      );
     }
     try {
       await adminDB.findOneAndDelete({ userName: username });
