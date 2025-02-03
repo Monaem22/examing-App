@@ -9,20 +9,29 @@ const {
 } = require("../controllers/student.controller.js");
 const { Auth } = require("../middlewares/authorized.js");
 const verifyToken = require("../middlewares/verifyToken.js");
-router.post("/add-student", verifyToken, Auth, addStudent);
+const checkUserRole = require("../middlewares/checkUserRole");
+router.post("/add-student", verifyToken, Auth, checkUserRole, addStudent);
 router.put(
   "/putUpdate-student/:studentId",
   verifyToken,
   Auth,
+  checkUserRole,
   putUpdateStudent
 );
 router.patch(
   "/patchUpdate-student/:studentId",
   verifyToken,
   Auth,
+  checkUserRole,
   patchUpdateStudent
 );
-router.delete("/delete-student/:studentId", verifyToken, Auth, deleteStudent);
-router.get("/all-Students", verifyToken, Auth, getAllStudents);
-router.get("/:id", verifyToken, Auth, getOneStudent);
+router.delete(
+  "/delete-student/:studentId",
+  verifyToken,
+  Auth,
+  checkUserRole,
+  deleteStudent
+);
+router.get("/all-Students", verifyToken, Auth, checkUserRole, getAllStudents);
+router.get("/:id", verifyToken, Auth, checkUserRole, getOneStudent);
 module.exports = router;

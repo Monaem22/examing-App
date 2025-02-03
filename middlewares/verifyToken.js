@@ -10,6 +10,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
     jwt.verify(Auth, process.env.SECRET_KEY_JWT, async (err, user) => {
       if (err) return next(new ApiError("Token is not valid or expired ", 401));
       req.userId = user.id;
+      req.userRole = user.role;
       return next();
     });
   } else {
