@@ -51,7 +51,9 @@ exports.login = asyncHandler(async (req, res, next) => {
   }),
     sendResponse(res, 200, {
       msg: "login successfully",
-      superAdmin: admin.role.includes("super_admin"),
+      admin: "admin",
+      role: admin.role,
+      superAdmin: admin.role === "super_admin",
     });
 });
 exports.getAll = asyncHandler(async (req, res, next) => {
@@ -59,7 +61,7 @@ exports.getAll = asyncHandler(async (req, res, next) => {
   const userId = req.userId;
   const superAdmin = await adminDB.findById(userId).select("userName role");
 
-  if (!superAdmin.role.includes("super_admin")) {
+  if (superAdmin.role !== "super_admin") {
     query = { role: { $ne: "super_admin" } };
   }
 

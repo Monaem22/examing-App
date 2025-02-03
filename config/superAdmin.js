@@ -9,7 +9,7 @@ const superAdmin = async () => {
     }
     const userName = "01011638721";
     const password = "MrMahmoud14@##@Ezo";
-    const role = ["super_admin", "admin", "user", "exams"];
+    const role = "super_admin";
     let existingUser = await AdminDB.findOne({ userName });
     if (existingUser) {
       return console.log({ message: "superAdmin is already existing" });

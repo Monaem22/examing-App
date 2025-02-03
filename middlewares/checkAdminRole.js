@@ -1,7 +1,7 @@
 const ApiError = require("../utils/apiError");
 
 const hasAdminRole = (role) => {
-  return role.includes("admin") || role.includes("super_admin");
+  return role === "admin" || role === "super_admin";
 };
 
 const checkAdminRole = async (req, res, next) => {

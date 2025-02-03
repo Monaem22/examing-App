@@ -1,13 +1,16 @@
 const ApiError = require("../utils/apiError");
 
-const hasUserRole = (roles) => {
-  return roles.includes("user");
+const hasUserRole = (role) => {
+  const allowedRoles = ["admin", "user", "super_admin"];
+  return allowedRoles.includes(role);
 };
 
 const checkUserRole = (req, res, next) => {
-  const userRoles = req.userRole;
+  const userRole = req.userRole;
+  console.log(`userRole: ${userRole}`);
+  console.log(hasUserRole(userRole));
 
-  if (!hasUserRole(userRoles)) {
+  if (!userRole || !hasUserRole(userRole)) {
     return next(
       new ApiError("You do not have permission to perform this action", 403)
     );
