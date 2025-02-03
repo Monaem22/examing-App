@@ -18,7 +18,7 @@ const admin_schema = new mongoose.Schema(
       type: [String],
       required: [true, "role cannot be empty"],
       enum: {
-        values: ["user", "exams", "admin"],
+        values: ["user", "exams", "admin" , "super_admin"],
         message: "'{VALUE}' is not a valid role.",
       },
     },
