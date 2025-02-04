@@ -13,7 +13,6 @@ router.use(Auth);
 router.use(checkAdminRole);
 router.post("/add-admin", adminController.addAdmin);
 router.get("/all-admin", adminController.getAll);
-router.get("/:id", adminController.getOne);
 router.patch("/update/:id", adminController.update);
 router.delete("/:id", adminController.delete);
 router.delete("/", adminController.delete);

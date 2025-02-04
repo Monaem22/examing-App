@@ -51,17 +51,16 @@ exports.login = asyncHandler(async (req, res, next) => {
   }),
     sendResponse(res, 200, {
       msg: "login successfully",
-      admin: "admin",
+      admin: true,
       role: admin.role,
       superAdmin: admin.role === "super_admin",
     });
 });
 exports.getAll = asyncHandler(async (req, res, next) => {
   let query = {};
-  const userId = req.userId;
-  const superAdmin = await adminDB.findById(userId).select("userName role");
+  const adminRole = req.userRole;
 
-  if (superAdmin.role !== "super_admin") {
+  if (adminRole !== "super_admin") {
     query = { role: { $ne: "super_admin" } };
   }
 
@@ -69,19 +68,8 @@ exports.getAll = asyncHandler(async (req, res, next) => {
 
   return sendResponse(res, 200, admins);
 });
-exports.getOne = asyncHandler(async (req, res, next) => {
-  try {
-    const admin = await adminDB
-      .findById(req.params.id)
-      .select("userName _id role");
-
-    return sendResponse(res, 200, admin);
-  } catch (err) {
-    return next(new ApiError("Not Found", 404));
-  }
-});
 exports.update = asyncHandler(async (req, res, next) => {
-  const userId = req.userId;
+  const adminRole = req.userRole;
   let { userName, role, password } = req.body;
 
   const superAdmin = await adminDB
@@ -89,7 +77,7 @@ exports.update = asyncHandler(async (req, res, next) => {
     .select("userName role");
 
   if (
-    !(userId === superAdmin._id) &&
+    adminRole !== "super_admin" &&
     req.params.id === superAdmin._id.toString()
   ) {
     return next(
@@ -105,7 +93,7 @@ exports.update = asyncHandler(async (req, res, next) => {
   return sendResponse(res, 200, "Updated successfully");
 });
 exports.delete = asyncHandler(async (req, res, next) => {
-  const userId = req.userId;
+  const adminRole = req.userRole;
 
   const superAdmin = await adminDB
     .findOne({ role: "super_admin" })
@@ -115,7 +103,7 @@ exports.delete = asyncHandler(async (req, res, next) => {
   if (req.params.id) {
     try {
       if (
-        !(userId === superAdmin._id) &&
+        adminRole !== "super_admin" &&
         req.params.id === superAdmin._id.toString()
       ) {
         return next(
@@ -136,7 +124,7 @@ exports.delete = asyncHandler(async (req, res, next) => {
     // delete by uerName
     const { username } = req.query;
 
-    if (superAdmin.userName === username) {
+    if (adminRole !== "super_admin" && superAdmin.userName === username) {
       return next(
         new ApiError(
           "You do not have the ability to delete the super admin",

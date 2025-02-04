@@ -1,11 +1,11 @@
 const ApiError = require("../utils/apiError");
+const asyncHandler = require("./asyncHandler.js");
 
 const hasUserRole = (role) => {
-  const allowedRoles = ["admin", "user", "super_admin"];
-  return allowedRoles.includes(role);
+  return role === "user" || role === "super_admin";
 };
 
-const checkUserRole = (req, res, next) => {
+const checkUserRole = asyncHandler(async (req, res, next) => {
   const userRole = req.userRole;
   console.log(`userRole: ${userRole}`);
   console.log(hasUserRole(userRole));
@@ -16,6 +16,6 @@ const checkUserRole = (req, res, next) => {
     );
   }
   next();
-};
+});
 
 module.exports = checkUserRole;
