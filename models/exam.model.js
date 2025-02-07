@@ -7,8 +7,6 @@ const exams_Schema = new mongoose.Schema(
       required: [true, "exam must have title."],
     },
     description: String,
-    group: [String],
-    teacher: String,
     grade: String,
     date: String,
     time: String,
@@ -18,6 +16,7 @@ const exams_Schema = new mongoose.Schema(
     validStudents: [
       {
         studentCode: String,
+        _id: false
       },
     ],
     examCode: {
