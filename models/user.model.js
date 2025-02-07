@@ -28,10 +28,10 @@ const users_Schema = new mongoose.Schema(
     studentMobile: String,
     parentMobile: String,
     group: String,
-    // student_code: {
-    //   type: String,
-    //   unique: [true, "student must have unique code."],
-    // },
+    student_code: {
+      type: String,
+      unique: [true, "student must have unique code."],
+    },
     gmail_Account: String,
     exams: [
       {
