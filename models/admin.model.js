@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const ApiError = require("../utils/apiError");
 
-admin_schema = new mongoose.Schema(
+const admin_schema = new mongoose.Schema(
   {
     userName: {
       type: String,
@@ -16,10 +15,10 @@ admin_schema = new mongoose.Schema(
       // maxlength: [20, "Password cannot exceed 20 characters"],
     },
     role: {
-      type: [String],
+      type: String,
       required: [true, "role cannot be empty"],
       enum: {
-        values: ["users", "exams", "admin"],
+        values: ["user", "exams", "admin", "super_admin"],
         message: "'{VALUE}' is not a valid role.",
       },
     },
@@ -44,4 +43,7 @@ admin_schema.pre("findOneAndUpdate", async function (next) {
   )),
     next();
 });
-module.exports = mongoose.model("admin", admin_schema);
+
+const adminDB = mongoose.model("admins", admin_schema);
+
+module.exports = adminDB;

@@ -9,16 +9,25 @@ const apiError = require("./utils/apiError.js");
 const adminRoute = require("./routes/admin.route.js");
 const userRoute = require("./routes/user.route.js");
 const error = require("./middlewares/error");
+const URL = require("./middlewares/url-origin.js");
 const app = express();
 dotenv.config();
 dbConnection();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:5173"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compression());
 app.use(helmet());
+app.use(URL);
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
 

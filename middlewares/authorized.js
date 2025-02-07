@@ -1,13 +1,19 @@
 const asyncHandler = require("./asyncHandler");
 const db = require("../models/admin.model");
-const apiError = require("../utils/apiError");
+const ApiError = require("../utils/apiError");
+
 const Auth = asyncHandler(async (req, res, next) => {
-  const admin = await db.findById(req.uerId).select("role");
-  admin ? admin : next(new apiError("unAuthenticated", 401));
-  const role = [...admin.role];
-  authorized = Boolean(
-    role.includes(req.originalUrl.split("/")[2].slice(0, 5))
-  );
-  authorized ? next() : next(new apiError("UnAuthorized", 401));
+  const admin = await db.findById(req.userId).select("role");
+  if (!admin) return next(new ApiError("UnAuthenticated", 401));
+
+  const allowedRoles = ["admin", "exams", "user", "super_admin"];
+  const role = admin.role;
+
+  if (!allowedRoles.includes(role)) {
+    return next(new ApiError("UnAuthorized", 401));
+  }
+
+  next();
 });
-exports.Auth = Auth;
+
+module.exports = { Auth };

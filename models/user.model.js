@@ -7,10 +7,6 @@ const users_Schema = new mongoose.Schema(
       type: String,
       required: [true, "student must have Name."],
     },
-    gender: {
-      type: String,
-      enum: ["ذكر", "انثي"],
-    },
     grade: {
       type: String,
       enum: [
@@ -29,12 +25,12 @@ const users_Schema = new mongoose.Schema(
       ],
     },
     address: String,
-    student_mobile: String,
-    parent_mobile: String,
+    studentMobile: String,
+    parentMobile: String,
     group: String,
     student_code: {
       type: String,
-      // unique: [true, "student must have unique code."],
+      unique: [true, "student must have unique code."],
     },
     gmail_Account: String,
     exams: [
@@ -45,10 +41,10 @@ const users_Schema = new mongoose.Schema(
       },
     ],
     //admin
-    email: {
-      type: String,
-      unique: [true, "user must have unique email."],
-    },
+    // email: {
+    //   type: String,
+    //   unique: [true, "user must have unique email."],
+    // },
     password: String,
     // The student cannot own roll at present
     // role: {
@@ -63,7 +59,7 @@ const users_Schema = new mongoose.Schema(
   }
 );
 
-users_Schema.index({ student_code: 1 }, { unique: true });
+// users_Schema.index({ student_code: 1 }, { unique: true });
 
 users_Schema.pre("save", async function (next) {
   const isModified = this.isModified("password");
