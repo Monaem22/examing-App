@@ -2,6 +2,7 @@ const asyncHandler = require("../middlewares/asyncHandler");
 const usersDB = require("../models/user.model");
 const ApiError = require("../utils/apiError");
 const sendResponse = require("../utils/response");
+const crypto = require("crypto");
 
 exports.addStudent = asyncHandler(async (req, res, next) => {
   const { name, grade, studentMobile, parentMobile } = req.body;
@@ -13,11 +14,14 @@ exports.addStudent = asyncHandler(async (req, res, next) => {
     return next(new ApiError("All fields must me be filled", 403));
   }
 
+  const studentCode = crypto.randomBytes(4).toString("hex");
+
   const userDoc = await usersDB.create({
     name,
     grade,
     studentMobile,
     parentMobile,
+    studentCode,
   });
 
   if (!userDoc) {

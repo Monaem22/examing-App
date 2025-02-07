@@ -28,11 +28,9 @@ const users_Schema = new mongoose.Schema(
     studentMobile: String,
     parentMobile: String,
     group: String,
-    student_code: {
+    studentCode: {
       type: String,
-      unique: [true, "student must have unique code."],
     },
-    gmail_Account: String,
     exams: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -40,18 +38,7 @@ const users_Schema = new mongoose.Schema(
         index: true,
       },
     ],
-    //admin
-    // email: {
-    //   type: String,
-    //   unique: [true, "user must have unique email."],
-    // },
     password: String,
-    // The student cannot own roll at present
-    // role: {
-    //     type: String,
-    //     enum: ['student', 'assistant', 'admin'],
-    //     default: 'student'
-    // },
   },
   {
     timestamps: { createdAt: "creationTime", updatedAt: "lastModified" },
@@ -59,7 +46,7 @@ const users_Schema = new mongoose.Schema(
   }
 );
 
-// users_Schema.index({ student_code: 1 }, { unique: true });
+users_Schema.index({ studentCode: 1 }, { unique: true });
 
 users_Schema.pre("save", async function (next) {
   const isModified = this.isModified("password");

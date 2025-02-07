@@ -4,7 +4,6 @@ const {
   getAllStudents,
   getOneStudent,
   updateStudent,
-  patchUpdateStudent,
   deleteStudent,
 } = require("../controllers/student.controller.js");
 const { Auth } = require("../middlewares/authorized.js");

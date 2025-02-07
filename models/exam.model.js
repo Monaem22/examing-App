@@ -15,11 +15,15 @@ const exams_Schema = new mongoose.Schema(
     duration: String,
     totalQuestions: String,
 
-    valid_students: [
+    validStudents: [
       {
-        student_code: String,
+        studentCode: String,
       },
     ],
+    examCode: {
+      type: String,
+      required: true,
+    },
 
     questions: [
       {
@@ -35,20 +39,20 @@ const exams_Schema = new mongoose.Schema(
             options: [String],
           },
         ],
-        question_image: String,
-        question_code: {
+        questionImage: String,
+        questionCode: {
           type: String,
           unique: [true, "question must have unique code."],
         },
       },
     ],
 
-    students_answers: [
+    studentsAnswers: [
       {
-        student_code: String,
+        studentCode: String,
         answers: [
           {
-            question_code: String,
+            questionCode: String,
             answer: String,
           },
         ],
@@ -60,8 +64,8 @@ const exams_Schema = new mongoose.Schema(
   }
 );
 
-exams_Schema.index({ question_code: 1 }, { unique: true });
-exams_Schema.index({ exam_code: 1 }, { unique: true });
+exams_Schema.index({ questionCode: 1 }, { unique: true });
+exams_Schema.index({ examCode: 1 }, { unique: true });
 
 const examsDB = mongoose.model("exams_table", exams_Schema);
 
