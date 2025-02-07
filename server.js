@@ -8,8 +8,8 @@ const dbConnection = require("./config/DB_connection");
 const apiError = require("./utils/apiError.js");
 const adminRoute = require("./routes/admin.route.js");
 const userRoute = require("./routes/user.route.js");
+const examRoute = require("./routes/exam.route.js");
 const error = require("./middlewares/error");
-const URL = require("./middlewares/url-origin.js");
 const app = express();
 dotenv.config();
 dbConnection();
@@ -27,9 +27,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compression());
 app.use(helmet());
-app.use(URL);
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
+app.use("/api/exam", examRoute);
 
 app.all("*", (req, res, next) => {
   return next(new apiError(`cant find this route ${req.originalUrl}`, 404));
