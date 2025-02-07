@@ -34,7 +34,7 @@ const users_Schema = new mongoose.Schema(
     group: String,
     student_code: {
       type: String,
-      unique: [true, "student must have unique code."],
+      // unique: [true, "student must have unique code."],
     },
     gmail_Account: String,
     exams: [
