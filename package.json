@@ -19,7 +19,7 @@
     "generate-backend-structure": "^1.1.4",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.3",
+    "mongoose": "^8.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.9"
   }

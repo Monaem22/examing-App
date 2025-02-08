@@ -3,6 +3,7 @@ const usersDB = require("../models/user.model");
 const ApiError = require("../utils/apiError");
 const sendResponse = require("../utils/response");
 const crypto = require("crypto");
+const { gradeMap, gradeOrder } = require("../utils/gradeMap.js");
 
 exports.addStudent = asyncHandler(async (req, res, next) => {
   const { name, grade, studentMobile, parentMobile } = req.body;
@@ -63,18 +64,36 @@ exports.deleteStudent = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAllStudents = asyncHandler(async (req, res, next) => {
-  const grade = req.query.grade;
-  let query;
-  if (grade) {
-    query = { grade: grade };
-  } else {
-    query = {};
-  }
   try {
-    const Students = await usersDB.find(query);
-    return sendResponse(res, 200, Students);
+    const students = await usersDB.aggregate([
+      {
+        $addFields: {
+          sortOrder: {
+            $indexOfArray: [gradeOrder, "$grade"],
+          },
+        },
+      },
+      { $sort: { sortOrder: 1 } },
+      {
+        $project: {
+          _id: 0,
+          name: 1,
+          studentCode: 1,
+          grade: 1,
+          studentMobile: 1,
+          parentMobile: 1,
+        },
+      },
+    ]);
+
+    const translatedStudents = students.map((student) => ({
+      ...student,
+      grade: gradeMap[student.grade] || "غير معروف",
+    }));
+
+    return sendResponse(res, 200, translatedStudents);
   } catch (err) {
-    next(new ApiError("Not Found", 404));
+    next(err);
   }
 });
 
