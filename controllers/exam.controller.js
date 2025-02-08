@@ -13,6 +13,7 @@ exports.addExam = asyncHandler(async (req, res, next) => {
     date,
     time,
     duration,
+    degree,
     totalQuestions,
     questions,
   } = req.body;
@@ -34,6 +35,7 @@ exports.addExam = asyncHandler(async (req, res, next) => {
     duration,
     date,
     time,
+    degree,
     totalQuestions,
     questions,
     examCode,
@@ -54,6 +56,7 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
     date,
     time,
     duration,
+    degree,
     totalQuestions,
     questions,
   } = req.body;
@@ -76,6 +79,7 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
       date,
       time,
       duration,
+      degree,
       totalQuestions,
       questions,
       validStudents,
