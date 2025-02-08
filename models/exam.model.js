@@ -63,7 +63,7 @@ const exams_Schema = new mongoose.Schema(
   }
 );
 
-exams_Schema.index({ questionCode: 1 }, { unique: true });
+// exams_Schema.index({ questionCode: 1 }, { unique: true });
 exams_Schema.index({ examCode: 1 }, { unique: true });
 
 const examsDB = mongoose.model("exams_table", exams_Schema);

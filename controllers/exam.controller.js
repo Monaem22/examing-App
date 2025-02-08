@@ -17,6 +17,10 @@ exports.addExam = asyncHandler(async (req, res, next) => {
     questions,
   } = req.body;
 
+  const dataNow = new Date().toISOString();
+
+  if (date < dataNow) return next(new ApiError("Date is running out", 403));
+
   const validStudents = await usersDB.find({ grade: grade }).select({
     studentCode: 1,
     _id: 0,
@@ -41,6 +45,72 @@ exports.addExam = asyncHandler(async (req, res, next) => {
   return sendResponse(res, 201, exam);
 });
 
+exports.updateExam = asyncHandler(async (req, res, next) => {
+  const { examId } = req.params; // Get examId from route params
+  const {
+    title,
+    description,
+    grade,
+    date,
+    time,
+    duration,
+    totalQuestions,
+    questions,
+  } = req.body;
+
+  const dataNow = new Date().toISOString();
+
+  if (date < dataNow) return next(new ApiError("Date is running out", 403));
+
+  const validStudents = await usersDB.find({ grade: grade }).select({
+    studentCode: 1,
+    _id: 0,
+  });
+
+  const updatedExam = await examsDB.findByIdAndUpdate(
+    examId,
+    {
+      title,
+      description,
+      grade,
+      date,
+      time,
+      duration,
+      totalQuestions,
+      questions,
+      validStudents,
+    },
+    { new: true, runValidators: true } // This option ensures that the updated document is returned
+  );
+
+  if (!updatedExam) {
+    return next(new ApiError("Exam not found", 404));
+  }
+
+  return sendResponse(res, 200, updatedExam);
+});
+
+exports.getAllExam = asyncHandler(async (req, res, next) => {
+  const exams = await examsDB.find();
+
+  if (!exams || exams.length === 0) {
+    return next(new ApiError("No exams found", 404));
+  }
+
+  return sendResponse(res, 200, exams);
+});
+
+exports.getExam = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const exam = await examsDB.findById(id);
+
+  if (!exam) {
+    return next(new ApiError("Exam not found", 404));
+  }
+
+  return sendResponse(res, 200, exam);
+});
+
 exports.deleteExam = asyncHandler(async (req, res, next) => {
   const { examId } = req.params;
   const exam = await examsDB.findByIdAndDelete(examId);
@@ -63,60 +133,4 @@ exports.resetValidStudents = asyncHandler(async (req, res, next) => {
   await exam.save();
 
   return sendResponse(res, 200, "success");
-});
-
-exports.getExam = asyncHandler(async (req, res, next) => {
-  const { id } = req.params;
-  const exam = await examsDB.findById(id);
-
-  if (!exam) {
-    return next(new ApiError("Exam not found", 404));
-  }
-
-  return sendResponse(res, 200, exam);
-});
-
-exports.getAllExam = asyncHandler(async (req, res, next) => {
-  const exams = await examsDB.find();
-
-  if (!exams || exams.length === 0) {
-    return next(new ApiError("No exams found", 404));
-  }
-
-  return sendResponse(res, 200, exams);
-});
-
-exports.updateExam = asyncHandler(async (req, res, next) => {
-  const { examId } = req.params; // Get examId from route params
-  const {
-    title,
-    description,
-    grade,
-    date,
-    time,
-    duration,
-    totalQuestions,
-    questions,
-  } = req.body;
-
-  const updatedExam = await examsDB.findByIdAndUpdate(
-    examId,
-    {
-      title,
-      description,
-      grade,
-      date,
-      time,
-      duration,
-      totalQuestions,
-      questions,
-    },
-    { new: true } // This option ensures that the updated document is returned
-  );
-
-  if (!updatedExam) {
-    return next(new ApiError("Exam not found", 404));
-  }
-
-  return sendResponse(res, 200, updatedExam);
 });
