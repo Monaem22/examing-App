@@ -46,5 +46,21 @@ exports.deleteExam = asyncHandler(async (req, res, next) => {
   const exam = await examsDB.findByIdAndDelete(examId);
   if (!exam) return next(new ApiError("Exam not found", 404));
 
-  return sendResponse(res, 201, "Exam deleted successfully");
+  return sendResponse(res, 200, "Exam deleted successfully");
+});
+
+exports.resetValidStudents = asyncHandler(async (req, res, next) => {
+  const { examId } = req.params;
+  const exam = await examsDB.findById(examId);
+  if (!exam) return next(new ApiError("Exam not found", 404));
+
+  const validStudents = await usersDB.find({ grade: exam.grade }).select({
+    studentCode: 1,
+    _id: 0,
+  });
+
+  exam.validStudents = validStudents;
+  await exam.save();
+
+  return sendResponse(res, 200, "success");
 });
