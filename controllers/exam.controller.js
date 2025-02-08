@@ -40,3 +40,11 @@ exports.addExam = asyncHandler(async (req, res, next) => {
 
   return sendResponse(res, 201, exam);
 });
+
+exports.deleteExam = asyncHandler(async (req, res, next) => {
+  const { examId } = req.params;
+  const exam = await examsDB.findByIdAndDelete(examId);
+  if (!exam) return next(new ApiError("Exam not found", 404));
+
+  return sendResponse(res, 201, "Exam deleted successfully");
+});
