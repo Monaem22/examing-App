@@ -64,8 +64,14 @@ exports.deleteStudent = asyncHandler(async (req, res, next) => {
 
 exports.getAllStudents = asyncHandler(async (req, res, next) => {
   const grade = req.query.grade;
+  let query;
+  if (grade) {
+    query = { grade: grade };
+  } else {
+    query = {};
+  }
   try {
-    const Students = await usersDB.find({ grade: grade });
+    const Students = await usersDB.find(query);
     return sendResponse(res, 200, Students);
   } catch (err) {
     next(new ApiError("Not Found", 404));
