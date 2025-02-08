@@ -12,11 +12,11 @@ const exams_Schema = new mongoose.Schema(
     time: String,
     duration: String,
     totalQuestions: String,
-
+    degree: String,
     validStudents: [
       {
         studentCode: String,
-        _id: false
+        _id: false,
       },
     ],
     examCode: {
