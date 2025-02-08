@@ -13,7 +13,7 @@ const {
 router.post("/add-exam", verifyToken, checkExamRole, addExam);
 router.get("/:id", verifyToken, checkExamRole, getExam);
 router.get("/get-all-exam", verifyToken, checkExamRole, getAllExam);
-router.put("/update-exam", verifyToken, checkExamRole, updateExam);
+router.put("/update-exam/:examId", verifyToken, checkExamRole, updateExam);
 router.delete("/delete-exam/:examId", verifyToken, checkExamRole, deleteExam);
 router.patch(
   "/reset-valid-students/:examId",

@@ -104,9 +104,7 @@ exports.getExam = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const exam = await examsDB.findById(id);
 
-  if (!exam) {
-    return next(new ApiError("Exam not found", 404));
-  }
+  if (!exam) return next(new ApiError("Exam not found", 404));
 
   return sendResponse(res, 200, exam);
 });
