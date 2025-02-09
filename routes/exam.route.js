@@ -14,8 +14,8 @@ const {
 const upload = require("../config/multer.js");
 
 router.post("/add-exam", verifyToken, checkExamRole, addExam);
-router.get("/:id", verifyToken, checkExamRole, getExam);
 router.get("/get-all-exam", verifyToken, checkExamRole, getAllExam);
+router.get("/:id", verifyToken, checkExamRole, getExam);
 router.put("/update-exam/:examId", verifyToken, checkExamRole, updateExam);
 router.delete("/delete-exam/:examId", verifyToken, checkExamRole, deleteExam);
 router.post(

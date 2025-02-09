@@ -118,7 +118,6 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAllExam = asyncHandler(async (req, res, next) => {
-  console.log("first")
   const exams = await examsDB.find();
 
   if (!exams || exams.length === 0) {
