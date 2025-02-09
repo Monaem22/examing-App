@@ -4,8 +4,10 @@ const usersDB = require("../models/user.model.js");
 const ApiError = require("../utils/apiError.js");
 const sendResponse = require("../utils/response.js");
 const crypto = require("crypto");
+const Cloudinary = require("../config/cloudinary.js");
 
 exports.addExam = asyncHandler(async (req, res, next) => {
+  let questionImage;
   const {
     title,
     description,
@@ -18,6 +20,8 @@ exports.addExam = asyncHandler(async (req, res, next) => {
     questions,
   } = req.body;
 
+  const image = req.file.path;
+
   const dataNow = new Date().toISOString();
 
   if (date < dataNow) return next(new ApiError("Date is running out", 403));
@@ -26,6 +30,19 @@ exports.addExam = asyncHandler(async (req, res, next) => {
     studentCode: 1,
     _id: 0,
   });
+
+  if (image) {
+    const results = await Cloudinary.uploader.upload(image, {
+      folder: "examApp",
+    });
+
+    if (!results) {
+      return next(
+        new ApiError("An error occurred when uploading the image", 504)
+      );
+    }
+    questionImage = { url: results.url, public_id: results.public_id };
+  }
 
   const examCode = crypto.randomBytes(4).toString("hex");
   const exam = await examsDB.create({
@@ -40,6 +57,7 @@ exports.addExam = asyncHandler(async (req, res, next) => {
     questions,
     examCode,
     validStudents,
+    questionImage,
   });
 
   if (!exam) return next(new ApiError("An error occurred", 500));
@@ -48,7 +66,22 @@ exports.addExam = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateExam = asyncHandler(async (req, res, next) => {
-  const { examId } = req.params; // Get examId from route params
+  const image = req.file.path;
+  let questionImage;
+  if (image) {
+    const results = await Cloudinary.uploader.upload(image, {
+      folder: "examApp",
+    });
+
+    if (!results) {
+      return next(
+        new ApiError("An error occurred when uploading the image", 504)
+      );
+    }
+
+    questionImage = { url: results.url, public_id: results.public_id };
+  }
+  const { examId } = req.params;
   const {
     title,
     description,
@@ -83,8 +116,9 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
       totalQuestions,
       questions,
       validStudents,
+      questionImage,
     },
-    { new: true, runValidators: true } // This option ensures that the updated document is returned
+    { new: true, runValidators: true }
   );
 
   if (!updatedExam) {
@@ -116,9 +150,33 @@ exports.getExam = asyncHandler(async (req, res, next) => {
 exports.deleteExam = asyncHandler(async (req, res, next) => {
   const { examId } = req.params;
   const exam = await examsDB.findByIdAndDelete(examId);
+  if (exam.questionImage) {
+    await Cloudinary.uploader.destroy(exam.questionImage.public_id);
+  }
+
   if (!exam) return next(new ApiError("Exam not found", 404));
 
   return sendResponse(res, 200, "Exam deleted successfully");
+});
+
+exports.deleteImage = asyncHandler(async (req, res, next) => {
+  const { examId } = req.params;
+
+  const exam = await examsDB.findById(examId);
+
+  if (!exam) return next(new ApiError("Exam not found", 404));
+
+  if (exam.questionImage) {
+    await Cloudinary.uploader.destroy(exam.questionImage.public_id);
+
+    exam.questionImage = undefined;
+
+    await exam.save();
+  } else {
+    return next(new ApiError("This exam has no image", 403));
+  }
+
+  return sendResponse(res, 200, "Image deleted successfully");
 });
 
 exports.resetValidStudents = asyncHandler(async (req, res, next) => {

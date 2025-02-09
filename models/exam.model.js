@@ -23,7 +23,10 @@ const exams_Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
+    questionImage: {
+      url: String,
+      public_id: String,
+    },
     questions: [
       {
         questionType: {
@@ -38,7 +41,6 @@ const exams_Schema = new mongoose.Schema(
             options: [String],
           },
         ],
-        questionImage: String,
         questionCode: {
           type: String,
           unique: [true, "question must have unique code."],

@@ -8,13 +8,22 @@ const {
   getExam,
   getAllExam,
   updateExam,
+  deleteImage,
 } = require("../controllers/exam.controller.js");
+const upload = require("../config/multer.js");
 
-router.post("/add-exam", verifyToken, checkExamRole, addExam);
+router.post(
+  "/add-exam",
+  verifyToken,
+  checkExamRole,
+  upload.single("image"),
+  addExam
+);
 router.get("/:id", verifyToken, checkExamRole, getExam);
 router.get("/get-all-exam", verifyToken, checkExamRole, getAllExam);
 router.put("/update-exam/:examId", verifyToken, checkExamRole, updateExam);
 router.delete("/delete-exam/:examId", verifyToken, checkExamRole, deleteExam);
+router.delete("/delete-image/:examId", verifyToken, checkExamRole, deleteImage);
 router.patch(
   "/reset-valid-students/:examId",
   verifyToken,
