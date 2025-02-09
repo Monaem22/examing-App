@@ -7,7 +7,6 @@ const crypto = require("crypto");
 const Cloudinary = require("../config/cloudinary.js");
 
 exports.addExam = asyncHandler(async (req, res, next) => {
-  let questionImage;
   const {
     title,
     description,
@@ -20,8 +19,6 @@ exports.addExam = asyncHandler(async (req, res, next) => {
     questions,
   } = req.body;
 
-  const image = req.file.path;
-
   const dataNow = new Date().toISOString();
 
   if (date < dataNow) return next(new ApiError("Date is running out", 403));
@@ -30,19 +27,6 @@ exports.addExam = asyncHandler(async (req, res, next) => {
     studentCode: 1,
     _id: 0,
   });
-
-  if (image) {
-    const results = await Cloudinary.uploader.upload(image, {
-      folder: "examApp",
-    });
-
-    if (!results) {
-      return next(
-        new ApiError("An error occurred when uploading the image", 504)
-      );
-    }
-    questionImage = { url: results.url, public_id: results.public_id };
-  }
 
   const examCode = crypto.randomBytes(4).toString("hex");
   const exam = await examsDB.create({
@@ -57,30 +41,36 @@ exports.addExam = asyncHandler(async (req, res, next) => {
     questions,
     examCode,
     validStudents,
-    questionImage,
   });
 
   if (!exam) return next(new ApiError("An error occurred", 500));
 
-  return sendResponse(res, 201, exam);
+  return sendResponse(res, 201, exam._id);
+});
+
+exports.addImage = asyncHandler(async (req, res, next) => {
+  const { examId } = req.params;
+  const image = req.file.path;
+
+  const exam = await examsDB.findById(examId);
+  if (!exam) return next(new ApiError("Exam not found", 404));
+
+  const results = await Cloudinary.uploader.upload(image, {
+    folder: "examApp",
+  });
+  if (!results)
+    return next(
+      new ApiError("An error occurred when uploading the image", 502)
+    );
+
+  exam.questionImage = { url: results.url, public_id: results.public_id };
+
+  await exam.save();
+
+  return sendResponse(res, 200, "Image added successfully");
 });
 
 exports.updateExam = asyncHandler(async (req, res, next) => {
-  const image = req.file.path;
-  let questionImage;
-  if (image) {
-    const results = await Cloudinary.uploader.upload(image, {
-      folder: "examApp",
-    });
-
-    if (!results) {
-      return next(
-        new ApiError("An error occurred when uploading the image", 504)
-      );
-    }
-
-    questionImage = { url: results.url, public_id: results.public_id };
-  }
   const { examId } = req.params;
   const {
     title,
@@ -116,7 +106,6 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
       totalQuestions,
       questions,
       validStudents,
-      questionImage,
     },
     { new: true, runValidators: true }
   );
@@ -129,6 +118,7 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAllExam = asyncHandler(async (req, res, next) => {
+  console.log("first")
   const exams = await examsDB.find();
 
   if (!exams || exams.length === 0) {

@@ -9,6 +9,11 @@ const {
 const { Auth } = require("../middlewares/authorized.js");
 const verifyToken = require("../middlewares/verifyToken.js");
 const checkUserRole = require("../middlewares/checkRole.js");
+const multer = require("multer");
+const upload = multer();
+upload.none();
+
+
 router.post("/add-student", verifyToken, Auth, checkUserRole, addStudent);
 router.put(
   "/update-student/:studentId",
