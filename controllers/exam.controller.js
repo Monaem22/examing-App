@@ -183,3 +183,55 @@ exports.resetValidStudents = asyncHandler(async (req, res, next) => {
 
   return sendResponse(res, 200, "success");
 });
+
+exports.test = asyncHandler(async (req, res, next) => {
+  const { studentCode, examCode } = req.body;
+  const student = await usersDB.findOne({ studentCode: studentCode });
+  if (!student) return next(new ApiError("Student not found", 404));
+
+  const exam = await examsDB.findOne({
+    $and: [{ examCode: examCode }, { validStudents: { studentCode } }],
+  });
+  
+  if (!exam)
+    return next(
+      new ApiError("Exam not found or you can't enter this exam", 404)
+    );
+
+  const examDateTime = new Date(`${exam.date}T${exam.time}:00Z`);
+
+  const dateNow = new Date();
+  dateNow.setHours(dateNow.getHours() + 2);
+  if (examDateTime > dateNow) {
+    return next(
+      new ApiError(`The data of exam  : ${exam.date} ${exam.time}`, 403)
+    );
+  }
+
+  let duration = exam.duration;
+  if (duration.includes("H")) {
+    duration = Number(duration.split("H")[0]);
+    examDateTime.setHours(examDateTime.getHours() + duration);
+  } else if (duration.includes("M")) {
+    duration = Number(duration.split("M")[0]);
+    examDateTime.setMinutes(examDateTime.getMinutes() + duration);
+  }
+
+  if (examDateTime < dateNow) {
+    return next(new ApiError("The exam is over", 403));
+  }
+
+  const remainingTime = examDateTime - dateNow; // time + duration - date.now
+
+  const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+  const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+  return sendResponse(res, 200, {
+    remainingTime: {
+      hours,
+      minutes,
+      seconds,
+    },
+  });
+});

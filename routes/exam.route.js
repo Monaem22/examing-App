@@ -10,6 +10,7 @@ const {
   updateExam,
   deleteImage,
   addImage,
+  test,
 } = require("../controllers/exam.controller.js");
 const upload = require("../config/multer.js");
 
@@ -32,5 +33,6 @@ router.patch(
   checkExamRole,
   resetValidStudents
 );
+router.post("/test", test);
 
 module.exports = router;
