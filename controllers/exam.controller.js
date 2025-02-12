@@ -235,3 +235,22 @@ exports.test = asyncHandler(async (req, res, next) => {
     },
   });
 });
+
+exports.submit_exam = asyncHandler(async (req, res, next) => {
+  const { studentCode, examCode } = req.query;
+
+  const student = await usersDB.findOne({ studentCode: studentCode });
+  if (!student) return next(new ApiError("Student not found", 404));
+
+  const exam = await examsDB.findOne({
+    $and: [{ examCode: examCode }, { validStudents: { studentCode } }],
+  });
+  if (!exam)
+    return next(
+      new ApiError("Exam not found or you can't enter this exam", 404)
+    );
+    
+
+  return sendResponse(res, 200, exam);
+});
+

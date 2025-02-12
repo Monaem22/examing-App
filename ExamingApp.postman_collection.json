@@ -1,0 +1,1993 @@
+{
+	"info": {
+		"_postman_id": "d9afb60d-5ec3-4201-bb7c-33ea2f04150b",
+		"name": "ExamingApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35393138",
+		"_collection_link": "https://examing-app.postman.co/workspace/Examing-App~843824f9-a9e1-4f1b-b8a1-205fe2f9bdb0/collection/41677725-d9afb60d-5ec3-4201-bb7c-33ea2f04150b?action=share&source=collection_link&creator=35393138"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "add-student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"احمد الشربيني\",\n    \"grade\" : \"G12\",\n    \"studentMobile\" : \"0103435435335\",\n    \"parentMobile\" : \"012352952925\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/user/add-student",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"add-student"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "add-student output",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OTAyODI0N2UwODY4YThkYTU1MTQ5OSIsImlhdCI6MTczNzUwMzQ3MiwiZXhwIjoxNzM3NTc1NDcyfQ.jtQXd3IkTITpC-r3X_IiAiJY0SgkV2hlOCAcMCg44yM",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Ahmed\",\r\n  \"gender\": \"ذكر\",\r\n  \"grade\": \"G5\",\r\n  \"studentMobile\": \"01012345678\",\r\n  \"parentMobile\": \"01087654321\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/user/add-student",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"add-student"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "70"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"46-PRX2Vn+OES9ikKIKk+YnIE3Lt64\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Jan 2025 23:53:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 201,\n    \"data\": \"User created successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get all-Students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/user/all-Students",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"all-Students"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get all-Students output",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/user/all-Students",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"all-Students"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "970"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3ca-ZjLo+C+zeNTz7NMZNNQ79OBxnhA\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Jan 2025 18:44:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 200,\n    \"data\": [\n        {\n            \"_id\": \"67912ef5e716f4989a46c85d\",\n            \"name\": \"محمد فوزي\",\n            \"grade\": \"G11\",\n            \"exams\": [],\n            \"creationTime\": \"2025-01-22T17:46:29.847Z\",\n            \"lastModified\": \"2025-01-25T17:08:43.568Z\",\n            \"parentMobile\": \"012352952925\",\n            \"studentMobile\": \"0103435435335\"\n        },\n        {\n            \"_id\": \"6795250b801a5017fc00dcae\",\n            \"name\": \"منعم\",\n            \"grade\": \"G12\",\n            \"studentMobile\": \"0103435435335\",\n            \"parentMobile\": \"012352952925\",\n            \"exams\": [],\n            \"creationTime\": \"2025-01-25T17:53:15.876Z\",\n            \"lastModified\": \"2025-01-25T17:53:15.876Z\"\n        },\n        {\n            \"_id\": \"679680405503aaded77a5c3f\",\n            \"name\": \"ahmed\",\n            \"gender\": \"ذكر\",\n            \"grade\": \"G7\",\n            \"studentMobile\": \"9999999999\",\n            \"parentMobile\": \"88888888888\",\n            \"exams\": [],\n            \"creationTime\": \"2025-01-26T18:34:40.067Z\",\n            \"lastModified\": \"2025-01-26T18:38:36.236Z\"\n        },\n        {\n            \"_id\": \"679681cff1b209132a486742\",\n            \"name\": \"yossef\",\n            \"gender\": \"ذكر\",\n            \"grade\": \"G9\",\n            \"studentMobile\": \"9999999999\",\n            \"parentMobile\": \"88888888888\",\n            \"exams\": [],\n            \"creationTime\": \"2025-01-26T18:41:19.727Z\",\n            \"lastModified\": \"2025-01-26T18:41:19.727Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "update-student",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"grade\" : \"G11\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/user/update-student/6795250b801a5017fc00dcae",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"update-student",
+								"6795250b801a5017fc00dcae"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update-student output",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/user/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6790362bbb3a9608129ba3d4"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "220"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"dc-SLZiqVEZrAZ0BxTnobB+1yeuyrk\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Jan 2025 00:08:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 200,\n    \"data\": {\n        \"_id\": \"6790362bbb3a9608129ba3d4\",\n        \"name\": \"mohamed\",\n        \"gender\": \"ذكر\",\n        \"grade\": \"G6\",\n        \"exams\": [],\n        \"creationTime\": \"2025-01-22T00:04:59.186Z\",\n        \"lastModified\": \"2025-01-22T00:04:59.186Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get one Student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/user/6795250b801a5017fc00dcae",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"6795250b801a5017fc00dcae"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get one Student output",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/user/679680405503aaded77a5c3f",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"679680405503aaded77a5c3f"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "276"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"114-FaNVXzGZK1pDTDKwE0XHWvLIbxg\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Jan 2025 18:47:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 200,\n    \"data\": {\n        \"_id\": \"679680405503aaded77a5c3f\",\n        \"name\": \"ahmed\",\n        \"gender\": \"ذكر\",\n        \"grade\": \"G7\",\n        \"studentMobile\": \"9999999999\",\n        \"parentMobile\": \"88888888888\",\n        \"exams\": [],\n        \"creationTime\": \"2025-01-26T18:34:40.067Z\",\n        \"lastModified\": \"2025-01-26T18:38:36.236Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete-student",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "/api/user/delete-student/679b70f113ab7e402d2eb73b",
+							"path": [
+								"api",
+								"user",
+								"delete-student",
+								"679b70f113ab7e402d2eb73b"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete-student output",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/user/delete-student/679680405503aaded77a5c3f",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"delete-student",
+										"679680405503aaded77a5c3f"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"49-CWANbVxTxuZo1dElbQiR0mjvY5o\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Jan 2025 18:52:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 200,\n    \"data\": \"Student deleted successfully\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\" : \"01011638721\",\n    \"password\" : \"MrMahmoud14@##@Ezo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/admin/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "login output",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userName\": \"Elshirbini\",\r\n  \"password\": \"Aa5527980098\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OTUxZjg4YWZmMDk4NmQ3MGNkYzAwZiIsImlhdCI6MTczNzkxNDU3NiwiZXhwIjoxNzM3OTIxNzc2fQ.xMbICytGxzFCz0PsUkftYH4uXK2xZoGR6r6FKfQLk-8; Path=/; Expires=Sun, 26 Jan 2025 20:02:56 GMT; HttpOnly; SameSite=Strict"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "71"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"47-8+3Ok3IBXyk+b6yByqQAs3HXFI4\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Jan 2025 18:02:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 200,\n    \"data\": {\n        \"msg\": \"login successfully\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "add-admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"mf\",\r\n  \"password\": \"112000\",\r\n  \"role\" : \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/admin/add-admin",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"add-admin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "add-admin output",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OTAyODI0N2UwODY4YThkYTU1MTQ5OSIsImlhdCI6MTczNzUwMTc2MCwiZXhwIjoxNzM3NTczNzYwfQ.H8i_4fTYtIQj_ncVPew0W6h7zTPi5VZFHoEk_jJodjw",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userName\": \"admin_2\",\r\n  \"password\": \"123456\",\r\n  \"role\" : \"admin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/add-admin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"add-admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "77"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4d-xcuelG+TGRDZ84DYZYEJDYTv1K4\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Jan 2025 23:25:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 200,\n    \"data\": \"Admin admin_2 Added successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "all-admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/admin/all-admin",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"all-admin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "all-admin output",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OTUxZjg4YWZmMDk4NmQ3MGNkYzAwZiIsImlhdCI6MTczNzkxNTQ4NiwiZXhwIjoxNzM3OTIyNjg2fQ.qFi4Bjhe0osUmNRljyOE-7sBrkLcPQ30DNSvKuouq_A",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/all-admin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"all-admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "271"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10f-vM/ftEZ/L9uS6XZePnHCsjv/AiU\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Jan 2025 18:24:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 200,\n    \"data\": [\n        {\n            \"_id\": \"67951f88aff0986d70cdc00f\",\n            \"userName\": \"Elshirbini\",\n            \"role\": [\n                \"admin\",\n                \"user\"\n            ]\n        },\n        {\n            \"_id\": \"6796796c8bbc691674ff344d\",\n            \"userName\": \"admin2\",\n            \"role\": [\n                \"admin\"\n            ]\n        },\n        {\n            \"_id\": \"679679b48bbc691674ff3450\",\n            \"userName\": \"admin3\",\n            \"role\": [\n                \"exams\"\n            ]\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\" : \"mohamed\",\n    \"role\" : [\"admin\" , \"user\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/admin/update/679b77de9817912a3f300b63",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"update",
+								"679b77de9817912a3f300b63"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update output",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userName\": \"admin\",\r\n  \"password\": \"5555\",\r\n  \"role\" : \"admin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/update/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "679028247e0868a8da551499"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "65"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"41-1zktSqKTaO4mlWjfDlL1s0lsWT4\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Jan 2025 23:33:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 200,\n    \"data\": \"Updated successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/admin/679b77de9817912a3f300b63",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"679b77de9817912a3f300b63"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete output",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin//:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "67902e2d021659718b237373"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "65"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"41-90NCVHsyCEmY4UPsaMUpKH7OtdQ\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Jan 2025 23:35:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 200,\n    \"data\": \"Deleted successfully\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Exam",
+			"item": [
+				{
+					"name": "Add exam",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"امتحان علي الوحده الاولي\",\n    \"description\": \"امتحان فاجر\",\n    \"date\": \"2025-10-4\",\n    \"time\": \"21:00\",\n    \"duration\": \"30m\",\n    \"grade\": \"G5\",\n    \"degree\": \"50\",\n    \"totalQuestions\": \"50\",\n    \"questions\": [\n        {\n            \"questionType\": \"اكمل\",\n            \"question\": \"اكمل العبارات الآتيه\",\n            \"subQuestions\": [\n                {\n                    \"question\": \"اين يقع هرم خوفو\",\n                    \"answer\": \"في نص الاهرامات \"\n                },\n                {\n                    \"question\": \"اين يقع هرم خفرع\",\n                    \"answer\": \"في شمال الاهرامات \"\n                }\n            ]\n        },\n        {\n            \"questionType\": \"اختر\",\n            \"question\": \"اختار اجابه واحده \",\n            \"subQuestions\": [\n                {\n                    \"question\": \"اسكندريه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"الغربيه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"الدقهليه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/exam/add-exam",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"exam",
+								"add-exam"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete exam",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/exam/delete-exam/67a92ed6c556f2e1ff96453d",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"exam",
+								"delete-exam",
+								"67a92ed6c556f2e1ff96453d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset valid students",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/exam/reset-valid-student/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"exam",
+								"reset-valid-student",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update exam",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"امتحان علي الوحده الاولي\",\n    \"description\": \"امتحان فاجر\",\n    \"date\": \"2025-10-4\",\n    \"time\": \"21:00\",\n    \"duration\": \"40m\",\n    \"grade\": \"G5\",\n    \"degree\": \"50\",\n    \"totalQuestions\": \"50\",\n    \"questions\": [\n        {\n            \"questionType\": \"اكمل\",\n            \"question\": \"اكمل العبارات الآتيه\",\n            \"subQuestions\": [\n                {\n                    \"question\": \"اين يقع هرم خوفو\",\n                    \"answer\": \"في نص الاهرامات \"\n                },\n                {\n                    \"question\": \"اين يقع هرم خفرع\",\n                    \"answer\": \"في شمال الاهرامات \"\n                }\n            ]\n        },\n        {\n            \"questionType\": \"اختر\",\n            \"question\": \"اختار اجابه واحده \",\n            \"subQuestions\": [\n                {\n                    \"question\": \"اسكندريه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"الغربيه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"الدقهليه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/exam/update-exam/67a92ed6c556f2e1ff96453d",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"exam",
+								"update-exam",
+								"67a92ed6c556f2e1ff96453d"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update exam response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Updated Exam Title\",\r\n  \"description\": \"Updated description for the exam\",\r\n  \"grade\": \"10\",\r\n  \"date\": \"2025-02-12\",\r\n  \"time\": \"09:00:00\",\r\n  \"duration\": 120,\r\n  \"totalQuestions\": 50,\r\n  \"questions\": [\r\n    {\r\n      \"question\": \"What is 2+2?\",\r\n      \"options\": [\"3\", \"4\", \"5\", \"6\"],\r\n      \"answer\": \"4\"\r\n    },\r\n    {\r\n      \"question\": \"What is the capital of France?\",\r\n      \"options\": [\"Berlin\", \"Paris\", \"London\", \"Madrid\"],\r\n      \"answer\": \"Paris\"\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/exam/update-exam/67a773e8fc26d805959442b7",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"exam",
+										"update-exam",
+										"67a773e8fc26d805959442b7"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "669"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29d-d3kDhDBE8vnGZy1iCmre5PAEiJc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Feb 2025 17:05:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 200,\n    \"data\": {\n        \"_id\": \"67a773e8fc26d805959442b7\",\n        \"title\": \"Updated Exam Title\",\n        \"description\": \"Updated description for the exam\",\n        \"grade\": \"10\",\n        \"date\": \"2025-02-12\",\n        \"time\": \"09:00:00\",\n        \"duration\": \"120\",\n        \"totalQuestions\": \"50\",\n        \"validStudents\": [\n            {\n                \"studentCode\": \"0ef325f8\"\n            },\n            {\n                \"studentCode\": \"9cb1bfc5\"\n            },\n            {\n                \"studentCode\": \"c31bc107\"\n            }\n        ],\n        \"examCode\": \"33ec1e3a\",\n        \"questions\": [\n            {\n                \"question\": \"What is 2+2?\",\n                \"_id\": \"67a78ed3caf56b2238bcf218\",\n                \"subQuestions\": []\n            },\n            {\n                \"question\": \"What is the capital of France?\",\n                \"_id\": \"67a78ed3caf56b2238bcf219\",\n                \"subQuestions\": []\n            }\n        ],\n        \"studentsAnswers\": [],\n        \"creationTime\": \"2025-02-08T15:10:32.964Z\",\n        \"lastModified\": \"2025-02-08T17:05:23.544Z\",\n        \"__v\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get all exam",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/exam/get-all-exam",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"exam",
+								"get-all-exam"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-all-exam response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/exam/get-all-exam",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"exam",
+										"get-all-exam"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b33-4X2ynbU95TML1QGCUImhvUEi1Xc\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Feb 2025 16:56:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 200,\n    \"data\": [\n        {\n            \"_id\": \"67a773e8fc26d805959442b7\",\n            \"title\": \"امتحان علي الوحده الاولي\",\n            \"description\": \"امتحان فاجر\",\n            \"grade\": \"G5\",\n            \"date\": \"2025-10-4\",\n            \"time\": \"21:00\",\n            \"duration\": \"1h\",\n            \"totalQuestions\": \"50\",\n            \"validStudents\": [\n                {\n                    \"studentCode\": \"0ef325f8\"\n                },\n                {\n                    \"studentCode\": \"9cb1bfc5\"\n                },\n                {\n                    \"studentCode\": \"c31bc107\"\n                }\n            ],\n            \"examCode\": \"33ec1e3a\",\n            \"questions\": [\n                {\n                    \"questionType\": \"اكمل\",\n                    \"question\": \"اكمل العبارات الآتيه\",\n                    \"subQuestions\": [\n                        {\n                            \"question\": \"اين يقع هرم خوفو\",\n                            \"answer\": \"في نص الاهرامات \",\n                            \"options\": [],\n                            \"_id\": \"67a773e8fc26d805959442b9\"\n                        },\n                        {\n                            \"question\": \"اين يقع هرم خفرع\",\n                            \"answer\": \"في شمال الاهرامات \",\n                            \"options\": [],\n                            \"_id\": \"67a773e8fc26d805959442ba\"\n                        }\n                    ],\n                    \"_id\": \"67a773e8fc26d805959442b8\"\n                },\n                {\n                    \"questionType\": \"اختر\",\n                    \"question\": \"اختار اجابه واحده \",\n                    \"subQuestions\": [\n                        {\n                            \"question\": \"اسكندريه فين\",\n                            \"answer\": \"مصر\",\n                            \"options\": [\n                                \"السودان\",\n                                \"مصر\",\n                                \"العراق\"\n                            ],\n                            \"_id\": \"67a773e8fc26d805959442bc\"\n                        },\n                        {\n                            \"question\": \"الغربيه فين\",\n                            \"answer\": \"مصر\",\n                            \"options\": [\n                                \"السودان\",\n                                \"مصر\",\n                                \"العراق\"\n                            ],\n                            \"_id\": \"67a773e8fc26d805959442bd\"\n                        },\n                        {\n                            \"question\": \"الدقهليه فين\",\n                            \"answer\": \"مصر\",\n                            \"options\": [\n                                \"السودان\",\n                                \"مصر\",\n                                \"العراق\"\n                            ],\n                            \"_id\": \"67a773e8fc26d805959442be\"\n                        }\n                    ],\n                    \"_id\": \"67a773e8fc26d805959442bb\"\n                }\n            ],\n            \"studentsAnswers\": [],\n            \"creationTime\": \"2025-02-08T15:10:32.964Z\",\n            \"lastModified\": \"2025-02-08T15:12:17.530Z\",\n            \"__v\": 1\n        },\n        {\n            \"_id\": \"67a78724e9b85ab4daf5ff42\",\n            \"title\": \"امتحان علي الوحده الاولي\",\n            \"description\": \"امتحان فاجر\",\n            \"grade\": \"G5\",\n            \"date\": \"2025-2-9\",\n            \"time\": \"21:00\",\n            \"duration\": \"1h\",\n            \"totalQuestions\": \"50\",\n            \"validStudents\": [\n                {\n                    \"studentCode\": \"0ef325f8\"\n                },\n                {\n                    \"studentCode\": \"9cb1bfc5\"\n                },\n                {\n                    \"studentCode\": \"c31bc107\"\n                }\n            ],\n            \"examCode\": \"6b39ac15\",\n            \"questions\": [\n                {\n                    \"questionType\": \"اكمل\",\n                    \"question\": \"اكمل العبارات الآتيه\",\n                    \"subQuestions\": [\n                        {\n                            \"question\": \"اين يقع هرم خوفو\",\n                            \"answer\": \"في نص الاهرامات \",\n                            \"options\": [],\n                            \"_id\": \"67a78724e9b85ab4daf5ff44\"\n                        },\n                        {\n                            \"question\": \"اين يقع هرم خفرع\",\n                            \"answer\": \"في شمال الاهرامات \",\n                            \"options\": [],\n                            \"_id\": \"67a78724e9b85ab4daf5ff45\"\n                        }\n                    ],\n                    \"_id\": \"67a78724e9b85ab4daf5ff43\"\n                },\n                {\n                    \"questionType\": \"اختر\",\n                    \"question\": \"اختار اجابه واحده \",\n                    \"subQuestions\": [\n                        {\n                            \"question\": \"اسكندريه فين\",\n                            \"answer\": \"مصر\",\n                            \"options\": [\n                                \"السودان\",\n                                \"مصر\",\n                                \"العراق\"\n                            ],\n                            \"_id\": \"67a78724e9b85ab4daf5ff47\"\n                        },\n                        {\n                            \"question\": \"الغربيه فين\",\n                            \"answer\": \"مصر\",\n                            \"options\": [\n                                \"السودان\",\n                                \"مصر\",\n                                \"العراق\"\n                            ],\n                            \"_id\": \"67a78724e9b85ab4daf5ff48\"\n                        },\n                        {\n                            \"question\": \"الدقهليه فين\",\n                            \"answer\": \"مصر\",\n                            \"options\": [\n                                \"السودان\",\n                                \"مصر\",\n                                \"العراق\"\n                            ],\n                            \"_id\": \"67a78724e9b85ab4daf5ff49\"\n                        }\n                    ],\n                    \"_id\": \"67a78724e9b85ab4daf5ff46\"\n                }\n            ],\n            \"studentsAnswers\": [],\n            \"creationTime\": \"2025-02-08T16:32:36.110Z\",\n            \"lastModified\": \"2025-02-08T16:32:36.110Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "get exam by id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/exam/67a92ed6c556f2e1ff96453d",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"exam",
+								"67a92ed6c556f2e1ff96453d"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get exam by id response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/exam/67a773e8fc26d805959442b7",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"exam",
+										"67a773e8fc26d805959442b7"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5ae-GFS41Bv6uCMFloMZI3V3Cx9hmCY\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Feb 2025 17:02:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"Success\",\n    \"statuscode\": 200,\n    \"data\": {\n        \"_id\": \"67a773e8fc26d805959442b7\",\n        \"title\": \"امتحان علي الوحده الاولي\",\n        \"description\": \"امتحان فاجر\",\n        \"grade\": \"G5\",\n        \"date\": \"2025-10-4\",\n        \"time\": \"21:00\",\n        \"duration\": \"1h\",\n        \"totalQuestions\": \"50\",\n        \"validStudents\": [\n            {\n                \"studentCode\": \"0ef325f8\"\n            },\n            {\n                \"studentCode\": \"9cb1bfc5\"\n            },\n            {\n                \"studentCode\": \"c31bc107\"\n            }\n        ],\n        \"examCode\": \"33ec1e3a\",\n        \"questions\": [\n            {\n                \"questionType\": \"اكمل\",\n                \"question\": \"اكمل العبارات الآتيه\",\n                \"subQuestions\": [\n                    {\n                        \"question\": \"اين يقع هرم خوفو\",\n                        \"answer\": \"في نص الاهرامات \",\n                        \"options\": [],\n                        \"_id\": \"67a773e8fc26d805959442b9\"\n                    },\n                    {\n                        \"question\": \"اين يقع هرم خفرع\",\n                        \"answer\": \"في شمال الاهرامات \",\n                        \"options\": [],\n                        \"_id\": \"67a773e8fc26d805959442ba\"\n                    }\n                ],\n                \"_id\": \"67a773e8fc26d805959442b8\"\n            },\n            {\n                \"questionType\": \"اختر\",\n                \"question\": \"اختار اجابه واحده \",\n                \"subQuestions\": [\n                    {\n                        \"question\": \"اسكندريه فين\",\n                        \"answer\": \"مصر\",\n                        \"options\": [\n                            \"السودان\",\n                            \"مصر\",\n                            \"العراق\"\n                        ],\n                        \"_id\": \"67a773e8fc26d805959442bc\"\n                    },\n                    {\n                        \"question\": \"الغربيه فين\",\n                        \"answer\": \"مصر\",\n                        \"options\": [\n                            \"السودان\",\n                            \"مصر\",\n                            \"العراق\"\n                        ],\n                        \"_id\": \"67a773e8fc26d805959442bd\"\n                    },\n                    {\n                        \"question\": \"الدقهليه فين\",\n                        \"answer\": \"مصر\",\n                        \"options\": [\n                            \"السودان\",\n                            \"مصر\",\n                            \"العراق\"\n                        ],\n                        \"_id\": \"67a773e8fc26d805959442be\"\n                    }\n                ],\n                \"_id\": \"67a773e8fc26d805959442bb\"\n            }\n        ],\n        \"studentsAnswers\": [],\n        \"creationTime\": \"2025-02-08T15:10:32.964Z\",\n        \"lastModified\": \"2025-02-08T15:12:17.530Z\",\n        \"__v\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Image",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/exam/delete-image/67a78724e9b85ab4daf5ff42",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"exam",
+								"delete-image",
+								"67a78724e9b85ab4daf5ff42"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "postman-cloud:///1ef9aa70-e88f-4f90-9513-8460beb88fed"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/api/exam/add-image/67a92ed6c556f2e1ff96453d",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"exam",
+								"add-image",
+								"67a92ed6c556f2e1ff96453d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"studentCode\" : \"fe63df61\",\n    \"examCode\" : \"33ec1e3a\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/exam/test",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"exam",
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://localhost:80",
+			"type": "string"
+		}
+	]
+}

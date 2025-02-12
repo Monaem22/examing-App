@@ -33,7 +33,9 @@ const exams_Schema = new mongoose.Schema(
           type: String,
           required: [true, "question must have type."],
         },
-        question: String,
+        // this degree for all questions of this type اوعي يا يوسف تغير فيهااااا
+        question_degree: String,
+        question_title: String,
         subQuestions: [
           {
             question: String,
@@ -41,10 +43,6 @@ const exams_Schema = new mongoose.Schema(
             options: [String],
           },
         ],
-        questionCode: {
-          type: String,
-          unique: [true, "question must have unique code."],
-        },
       },
     ],
 
@@ -53,8 +51,9 @@ const exams_Schema = new mongoose.Schema(
         studentCode: String,
         answers: [
           {
-            questionCode: String,
+            questionId: String,
             answer: String,
+            result: Boolean,
           },
         ],
       },
