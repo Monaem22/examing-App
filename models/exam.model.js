@@ -34,8 +34,8 @@ const exams_Schema = new mongoose.Schema(
         subQuestions: [
           {
             _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
-            question: String,
-            answer: String,
+            questionText: String,
+            correctAnswer: String,
             options: [String],
           },
         ],

@@ -1410,7 +1410,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"امتحان علي الوحده الاولي\",\n    \"description\": \"امتحان فاجر\",\n    \"date\": \"2025-10-4\",\n    \"time\": \"21:00\",\n    \"duration\": \"30m\",\n    \"grade\": \"G5\",\n    \"degree\": \"50\",\n    \"totalQuestions\": \"50\",\n    \"questions\": [\n        {\n            \"questionType\": \"اكمل\",\n            \"question\": \"اكمل العبارات الآتيه\",\n            \"subQuestions\": [\n                {\n                    \"question\": \"اين يقع هرم خوفو\",\n                    \"answer\": \"في نص الاهرامات \"\n                },\n                {\n                    \"question\": \"اين يقع هرم خفرع\",\n                    \"answer\": \"في شمال الاهرامات \"\n                }\n            ]\n        },\n        {\n            \"questionType\": \"اختر\",\n            \"question\": \"اختار اجابه واحده \",\n            \"subQuestions\": [\n                {\n                    \"question\": \"اسكندريه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"الغربيه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"الدقهليه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"raw": "{\n    \"title\": \"امتحان علي الوحده الاولي\",\n    \"description\": \"امتحان فاجر\",\n    \"date\": \"2025-10-4\",\n    \"time\": \"21:00\",\n    \"duration\": \"30m\",\n    \"grade\": \"G5\",\n    \"questions\": [\n        {\n            \"question_title\": \"اكمل العبارات الآتيه\",\n            \"subQuestions\": [\n                {\n                    \"question\": \"اين يقع هرم خوفو\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"اين يقع هرم خفرع\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                }\n            ]\n        },\n        {\n            \"question_title\": \"اختار اجابه واحده \",\n            \"subQuestions\": [\n                {\n                    \"question\": \"اسكندريه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"الغربيه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"الدقهليه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1478,7 +1478,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"امتحان علي الوحده الاولي\",\n    \"description\": \"امتحان فاجر\",\n    \"date\": \"2025-10-4\",\n    \"time\": \"21:00\",\n    \"duration\": \"40m\",\n    \"grade\": \"G5\",\n    \"degree\": \"50\",\n    \"totalQuestions\": \"50\",\n    \"questions\": [\n        {\n            \"questionType\": \"اكمل\",\n            \"question\": \"اكمل العبارات الآتيه\",\n            \"subQuestions\": [\n                {\n                    \"question\": \"اين يقع هرم خوفو\",\n                    \"answer\": \"في نص الاهرامات \"\n                },\n                {\n                    \"question\": \"اين يقع هرم خفرع\",\n                    \"answer\": \"في شمال الاهرامات \"\n                }\n            ]\n        },\n        {\n            \"questionType\": \"اختر\",\n            \"question\": \"اختار اجابه واحده \",\n            \"subQuestions\": [\n                {\n                    \"question\": \"اسكندريه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"الغربيه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"الدقهليه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"raw": "{\n    \"title\": \"امتحان علي الوحده الاولي\",\n    \"description\": \"امتحان فاجر\",\n    \"date\": \"2025-10-4\",\n    \"time\": \"21:00\",\n    \"duration\": \"30m\",\n    \"grade\": \"G5\",\n    \"questions\": [\n        {\n            \"question_title\": \"اكمل العبارات الآتيه\",\n            \"subQuestions\": [\n                {\n                    \"question\": \"اين يقع هرم خوفو\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"اين يقع هرم خفرع\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                }\n            ]\n        },\n        {\n            \"question_title\": \"اختار اجابه واحده \",\n            \"subQuestions\": [\n                {\n                    \"question\": \"اسكندريه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"الغربيه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                },\n                {\n                    \"question\": \"الدقهليه فين\",\n                    \"answer\": \"مصر\",\n                    \"options\": [\n                        \"السودان\",\n                        \"مصر\",\n                        \"العراق\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1931,7 +1931,7 @@
 					"response": []
 				},
 				{
-					"name": "test",
+					"name": "Login to exam",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1945,14 +1945,53 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/api/exam/test",
+							"raw": "{{URL}}/api/exam/login-to-exam",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"api",
 								"exam",
-								"test"
+								"login-to-exam"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit exam",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"answers\" :[\n        \"مصر\",\n        \"مصر\",\n        \"\",\n        \"العراق\",\n        \"العراق\"\n\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/exam/submit-exam/?studentCode=0ef325f8&examCode=0fbfe145",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"exam",
+								"submit-exam",
+								""
+							],
+							"query": [
+								{
+									"key": "studentCode",
+									"value": "0ef325f8"
+								},
+								{
+									"key": "examCode",
+									"value": "0fbfe145"
+								}
 							]
 						}
 					},

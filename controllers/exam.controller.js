@@ -5,7 +5,6 @@ const ApiError = require("../utils/apiError.js");
 const sendResponse = require("../utils/response.js");
 const crypto = require("crypto");
 const Cloudinary = require("../config/cloudinary.js");
-const StudentAnswers = require("../models/studentAnswers.js");
 
 exports.addExam = asyncHandler(async (req, res, next) => {
   const { title, description, grade, date, time, duration, questions } =
@@ -229,16 +228,20 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
   const { studentCode, examCode } = req.query;
   const { answers } = req.body;
 
-  const isSubmitted = await StudentAnswers.findOne({
-    studentCode,
-    exams: { $elemMatch: { examCode: examCode } },
+  const student = await usersDB.findOne({
+    // $and: [
+      // { 
+        studentCode: studentCode ,
+        exams: { $elemMatch: { examCode: examCode , isSubmitted: false} }
+      // },
+    //   {exams: { $elemMatch: { examCode: examCode } }},
+    // ]
   });
-  if (isSubmitted) {
-    throw new ApiError("You don't have the ability to resubmit", 403);
-  }
+  // if (student.exams.includes(examCode)) {
+  //   throw new ApiError("You don't have the ability to resubmit", 403);
+  // }
 
-  const student = await usersDB.findOne({ studentCode: studentCode });
-  if (!student) throw new ApiError("Student not found", 404);
+  if (!student) throw new ApiError("Student not found or You don't have the ability to resubmit", 404);
 
   const exam = await examsDB.findOne({
     $and: [{ examCode: examCode }, { validStudents: { studentCode } }],
