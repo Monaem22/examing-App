@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const verifyToken = require("../middlewares/verifyToken.js");
+const { verifyToken , verifyTokenExam } = require("../middlewares/verifyToken.js");
 const checkExamRole = require("../middlewares/checkRole.js");
 const {
   addExam,
@@ -35,6 +35,6 @@ router.patch(
   resetValidStudents
 );
 router.post("/login-to-exam", loginToExam);
-router.post("/submit-exam", submit_exam);
+router.post("/submit-exam", verifyTokenExam, submit_exam);
 
 module.exports = router;

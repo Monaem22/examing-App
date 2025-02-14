@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const adminController = require("../controllers/admin.controller.js");
 const { Auth } = require("../middlewares/authorized.js");
-const verifyToken = require("../middlewares/verifyToken.js");
+const { verifyToken } = require("../middlewares/verifyToken.js");
 const checkAdminRole = require("../middlewares/checkRole.js");
 const multer = require("multer");
 const upload = multer();

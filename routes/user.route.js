@@ -7,7 +7,7 @@ const {
   deleteStudent,
 } = require("../controllers/student.controller.js");
 const { Auth } = require("../middlewares/authorized.js");
-const verifyToken = require("../middlewares/verifyToken.js");
+const {verifyToken} = require("../middlewares/verifyToken.js");
 const checkUserRole = require("../middlewares/checkRole.js");
 const multer = require("multer");
 const upload = multer();

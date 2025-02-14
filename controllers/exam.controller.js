@@ -5,6 +5,8 @@ const ApiError = require("../utils/apiError.js");
 const sendResponse = require("../utils/response.js");
 const crypto = require("crypto");
 const Cloudinary = require("../config/cloudinary.js");
+const StudentAnswers = require("../models/studentAnswers.js");
+const jwt = require("jsonwebtoken");
 
 exports.addExam = asyncHandler(async (req, res, next) => {
   const { title, description, grade, date, time, duration, questions } =
@@ -213,12 +215,25 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
   const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
+  const dataSigned = jwt.sign(
+    { data: { examCode: examCode, studentCode: studentCode } },
+    process.env.SECRET_KEY_JWT,
+    { expiresIn: exam.duration.toLowerCase() }
+  );
+
+  res.cookie("data", dataSigned, {
+    expires: examDateTime,
+    httpOnly: true,
+    sameSite: "strict",
+  });
+
   return sendResponse(res, 200, {
     remainingTime: {
       hours,
       minutes,
       seconds,
     },
+    exam,
     examCode,
     studentCode,
   });
@@ -227,21 +242,25 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
 exports.submit_exam = asyncHandler(async (req, res, next) => {
   const { studentCode, examCode } = req.query;
   const { answers } = req.body;
+  const { data } = req.data;
 
-  const student = await usersDB.findOne({
-    // $and: [
-      // { 
-        studentCode: studentCode ,
-        exams: { $elemMatch: { examCode: examCode , isSubmitted: false} }
-      // },
-    //   {exams: { $elemMatch: { examCode: examCode } }},
-    // ]
+  if (data.studentCode !== studentCode || data.examCode !== examCode) {
+    throw new ApiError(
+      "examCode and StudentCode not the same of examCode and StudentCode that logged",
+      401
+    );
+  }
+
+  const isSubmitted = await StudentAnswers.findOne({
+    studentCode,
+    exams: { $elemMatch: { examCode: examCode } },
   });
-  // if (student.exams.includes(examCode)) {
-  //   throw new ApiError("You don't have the ability to resubmit", 403);
-  // }
+  if (isSubmitted) {
+    throw new ApiError("You don't have the ability to resubmit", 403);
+  }
 
-  if (!student) throw new ApiError("Student not found or You don't have the ability to resubmit", 404);
+  const student = await usersDB.findOne({ studentCode: studentCode });
+  if (!student) throw new ApiError("Student not found", 404);
 
   const exam = await examsDB.findOne({
     $and: [{ examCode: examCode }, { validStudents: { studentCode } }],
@@ -250,33 +269,15 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
     throw new ApiError("Exam not found or you can't enter this exam", 404);
   }
 
-  // let score = 0;
-  // const correctedAnswers = answers.map((ans) => {
-  //   const subQuestion = exam.questions
-  //     .flatMap((q) => q.subQuestions)
-  //     .find((q) => q._id.toString() === ans.questionId);
-
-  //   const isCorrect = subQuestion && subQuestion.answer === ans.answer;     // if frontend send me with every subQuestion  id   , we will use this method
-  //   if (isCorrect) score += 1;
-  //   return { ...ans, result: isCorrect };
-  // });
-
-  const allSubQuestions = exam.questions.flatMap((q) => q.subQuestions);
-
-  if (answers.length !== allSubQuestions.length) {
-    throw new ApiError("Number of answers does not match exam questions", 403);
-  }
-
   let score = 0;
-  const correctedAnswers = answers.map((ans, index) => {
-    const subQuestion = allSubQuestions[index];
-    const isCorrect = subQuestion.answer === ans;
+  const correctedAnswers = answers.map((ans) => {
+    const subQuestion = exam.questions
+      .flatMap((q) => q.subQuestions)
+      .find((q) => q._id.toString() === ans.questionId);
+
+    const isCorrect = subQuestion && subQuestion.correctAnswer === ans.answer;
     if (isCorrect) score += 1;
-    return {
-      questionId: subQuestion._id,
-      answer: ans,
-      result: isCorrect,
-    };
+    return { ...ans, result: isCorrect };
   });
 
   const submission = await StudentAnswers.create({
@@ -289,6 +290,8 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
       },
     ],
   });
+
+  res.clearCookie("data");
 
   return sendResponse(res, 200, submission);
 });
