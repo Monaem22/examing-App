@@ -11,8 +11,8 @@ const exams_Schema = new mongoose.Schema(
     date: String,
     time: String,
     duration: String,
-    totalQuestions: String,
-    degree: String,
+    totalQuestions: Number,
+    degree: Number,
     validStudents: [
       {
         studentCode: String,
@@ -29,15 +29,11 @@ const exams_Schema = new mongoose.Schema(
     },
     questions: [
       {
-        questionType: {
-          type: String,
-          required: [true, "question must have type."],
-        },
-        // this degree for all questions of this type اوعي يا يوسف تغير فيهااااا
-        question_degree: String,
+        // question_degree: String,
         question_title: String,
         subQuestions: [
           {
+            _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
             question: String,
             answer: String,
             options: [String],
@@ -46,25 +42,24 @@ const exams_Schema = new mongoose.Schema(
       },
     ],
 
-    studentsAnswers: [
-      {
-        studentCode: String,
-        answers: [
-          {
-            questionId: String,
-            answer: String,
-            result: Boolean,
-          },
-        ],
-      },
-    ],
+    // studentsAnswers: [
+    //   {
+    //     studentCode: String,
+    //     answers: [
+    //       {
+    //         questionId: String,
+    //         answer: String,
+    //         result: Boolean,
+    //       },
+    //     ],
+    //   },
+    // ],
   },
   {
     timestamps: { createdAt: "creationTime", updatedAt: "lastModified" },
   }
 );
 
-// exams_Schema.index({ questionCode: 1 }, { unique: true });
 exams_Schema.index({ examCode: 1 }, { unique: true });
 
 const examsDB = mongoose.model("exams_table", exams_Schema);

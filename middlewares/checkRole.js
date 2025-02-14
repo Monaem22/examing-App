@@ -1,5 +1,5 @@
 const ApiError = require("../utils/apiError.js");
-const asyncHandler = require("./asyncHandler.js");
+const asyncHandler = require("express-async-handler");
 
 const hasAdminRole = (role) => {
   return role === "admin" || role === "super_admin";
@@ -9,8 +9,9 @@ const checkAdminRole = asyncHandler(async (req, res, next) => {
   const userRole = req.userRole;
 
   if (!userRole || !hasAdminRole(userRole)) {
-    return next(
-      new ApiError("You do not have permission to perform this action", 403)
+    throw new ApiError(
+      "You do not have permission to perform this action",
+      403
     );
   }
   next();
@@ -24,8 +25,9 @@ const checkUserRole = asyncHandler(async (req, res, next) => {
   const userRole = req.userRole;
 
   if (!userRole || !hasUserRole(userRole)) {
-    return next(
-      new ApiError("You do not have permission to perform this action", 403)
+    throw new ApiError(
+      "You do not have permission to perform this action",
+      403
     );
   }
   next();
@@ -39,8 +41,9 @@ const checkExamRole = asyncHandler(async (req, res, next) => {
   const userRole = req.userRole;
 
   if (!userRole || !hasExamRole(userRole)) {
-    return next(
-      new ApiError("You do not have permission to perform this action", 403)
+    throw new ApiError(
+      "You do not have permission to perform this action",
+      403
     );
   }
   next();

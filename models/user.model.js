@@ -28,25 +28,18 @@ const users_Schema = new mongoose.Schema(
     studentCode: {
       type: String,
     },
-    exams: [
-      {
-        examCode: String,
-        student_Answers:
-          [
-            {
-              
-              questionId: String,
-              answer: String,
-              result: Boolean,
-            },
-          ],
-      },
-    ],
     // exams: [
     //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "exams_table",
-    //     index: true,
+    //     examCode: String,
+    //     student_Answers:
+    //       [
+    //         {
+              
+    //           questionId: String,
+    //           answer: String,
+    //           result: Boolean,
+    //         },
+    //       ],
     //   },
     // ],
     password: String,
