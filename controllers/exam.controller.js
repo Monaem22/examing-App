@@ -295,3 +295,69 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
 
   return sendResponse(res, 200, submission);
 });
+
+exports.getStudentScores = asyncHandler(async (req, res, next) => {
+  const { studentCode } = req.params;
+
+  const student = await StudentAnswers.findOne({ studentCode });
+  if (!student) throw new ApiError("No exams found for this student", 404);
+
+  const examCodes = student.exams.map((exam) => exam.examCode);
+  const exams = await examsDB.find({ examCode: { $in: examCodes } }).lean();
+
+  const scores = student.exams.map((exam) => {
+    const examDetails = exams.find((e) => e.examCode === exam.examCode);
+
+    return {
+      examCode: exam.examCode,
+      examTitle: examDetails?.title || "Unknown Exam",
+      date: examDetails?.date || "Unknown Date",
+      time: examDetails?.time || "Unknown Time",
+      score: exam.score,
+    };
+  });
+
+  return sendResponse(res, 200, { scores });
+});
+
+exports.getExamDetails = asyncHandler(async (req, res, next) => {
+  const { studentCode, examCode } = req.params;
+
+  const student = await StudentAnswers.findOne({ studentCode });
+  if (!student) throw new ApiError("Student not found", 404);
+
+  const examSubmission = student.exams.find(
+    (exam) => exam.examCode === examCode
+  );
+  if (!examSubmission)
+    throw new ApiError("Exam not found for this student", 404);
+
+  const exam = await examsDB.findOne({ examCode });
+  if (!exam) throw new ApiError("Exam details not found", 404);
+
+  const detailedAnswers = exam.questions.flatMap((question) =>
+    question.subQuestions.map((subQ) => {
+      const studentAnswerObj = examSubmission.answers.find(
+        (ans) => ans.questionId.toString() === subQ._id.toString(),
+        console.log("subQ : ", subQ),
+        console.log("subQ question : ", subQ.questionText)
+      );
+
+      return {
+        questionId: subQ._id,
+        questionText: subQ.questionText,
+        correctAnswer: subQ.correctAnswer,
+        studentAnswer: studentAnswerObj?.answer || "Not answered",
+        isCorrect: studentAnswerObj?.result || false,
+      };
+    })
+  );
+
+  return sendResponse(res, 200, {
+    examTitle: exam.title,
+    examDate: exam.date,
+    examTime: exam.time,
+    score: examSubmission.score,
+    detailedAnswers,
+  });
+});

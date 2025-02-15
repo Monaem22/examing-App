@@ -1,5 +1,8 @@
 const router = require("express").Router();
-const { verifyToken , verifyTokenExam } = require("../middlewares/verifyToken.js");
+const {
+  verifyToken,
+  verifyTokenExam,
+} = require("../middlewares/verifyToken.js");
 const checkExamRole = require("../middlewares/checkRole.js");
 const {
   addExam,
@@ -12,6 +15,8 @@ const {
   addImage,
   loginToExam,
   submit_exam,
+  getStudentScores,
+  getExamDetails,
 } = require("../controllers/exam.controller.js");
 const upload = require("../config/multer.js");
 
@@ -36,5 +41,7 @@ router.patch(
 );
 router.post("/login-to-exam", loginToExam);
 router.post("/submit-exam", verifyTokenExam, submit_exam);
+router.get("/student-scores/:studentCode", getStudentScores);
+router.get("/exam-details/:studentCode/:examCode", getExamDetails);
 
 module.exports = router;
