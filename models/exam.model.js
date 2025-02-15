@@ -29,7 +29,6 @@ const exams_Schema = new mongoose.Schema(
     },
     questions: [
       {
-        // question_degree: String,
         question_title: String,
         subQuestions: [
           {
@@ -41,19 +40,6 @@ const exams_Schema = new mongoose.Schema(
         ],
       },
     ],
-
-    // studentsAnswers: [
-    //   {
-    //     studentCode: String,
-    //     answers: [
-    //       {
-    //         questionId: String,
-    //         answer: String,
-    //         result: Boolean,
-    //       },
-    //     ],
-    //   },
-    // ],
   },
   {
     timestamps: { createdAt: "creationTime", updatedAt: "lastModified" },

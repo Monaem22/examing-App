@@ -22,7 +22,7 @@ const upload = require("../config/multer.js");
 
 router.post("/add-exam", verifyToken, checkExamRole, addExam);
 router.get("/get-all-exam", verifyToken, checkExamRole, getAllExam);
-router.get("/:id", verifyToken, checkExamRole, getExam);
+router.get("/get-exam/:examId", verifyToken, checkExamRole, getExam);
 router.put("/update-exam/:examId", verifyToken, checkExamRole, updateExam);
 router.delete("/delete-exam/:examId", verifyToken, checkExamRole, deleteExam);
 router.post(
@@ -41,7 +41,7 @@ router.patch(
 );
 router.post("/login-to-exam", loginToExam);
 router.post("/submit-exam", verifyTokenExam, submit_exam);
-router.get("/student-scores/:studentCode", getStudentScores);
+router.get("/student-scores", getStudentScores);
 router.get("/exam-details/:studentCode/:examCode", getExamDetails);
 
 module.exports = router;

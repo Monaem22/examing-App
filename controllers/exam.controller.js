@@ -31,7 +31,7 @@ exports.addExam = asyncHandler(async (req, res, next) => {
     title,
     description,
     grade,
-    duration,
+    duration: duration.toUpperCase(),
     date,
     time,
     questions,
@@ -94,7 +94,7 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
       grade,
       date,
       time,
-      duration,
+      duration: duration.toUpperCase(),
       totalQuestions,
       degree: totalQuestions,
       questions,
@@ -119,8 +119,8 @@ exports.getAllExam = asyncHandler(async (req, res, next) => {
 });
 
 exports.getExam = asyncHandler(async (req, res, next) => {
-  const { id } = req.params;
-  const exam = await examsDB.findById(id);
+  const { examId } = req.params;
+  const exam = await examsDB.findById(examId);
 
   if (!exam) throw new ApiError("Exam not found", 404);
 
@@ -280,16 +280,26 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
     return { ...ans, result: isCorrect };
   });
 
-  const submission = await StudentAnswers.create({
-    studentCode,
-    exams: [
-      {
-        examCode,
-        answers: correctedAnswers,
-        score,
-      },
-    ],
-  });
+  let submission = await StudentAnswers.findOne({ studentCode });
+  if (submission) {
+    submission.exams.push({
+      examCode,
+      answers: correctedAnswers,
+      score,
+    });
+    await submission.save();
+  } else {
+    submission = await StudentAnswers.create({
+      studentCode,
+      exams: [
+        {
+          examCode,
+          answers: correctedAnswers,
+          score,
+        },
+      ],
+    });
+  }
 
   res.clearCookie("data");
 
@@ -297,25 +307,30 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
 });
 
 exports.getStudentScores = asyncHandler(async (req, res, next) => {
-  const { studentCode } = req.params;
+  const { studentCode } = req.body;
 
-  const student = await StudentAnswers.findOne({ studentCode });
-  if (!student) throw new ApiError("No exams found for this student", 404);
+  const studentDegrees = await StudentAnswers.findOne({ studentCode }).select(
+    "exams.examCode exams.score -_id"
+  );
+  if (!studentDegrees)
+    throw new ApiError("No exams found for this student", 404);
 
-  const examCodes = student.exams.map((exam) => exam.examCode);
-  const exams = await examsDB.find({ examCode: { $in: examCodes } }).lean();
+  console.log(studentDegrees);
 
-  const scores = student.exams.map((exam) => {
-    const examDetails = exams.find((e) => e.examCode === exam.examCode);
+  const scores = await Promise.all(
+    studentDegrees.exams.map(async (e) => {
+      const exam = await examsDB.findOne({ examCode: e.examCode });
 
-    return {
-      examCode: exam.examCode,
-      examTitle: examDetails?.title || "Unknown Exam",
-      date: examDetails?.date || "Unknown Date",
-      time: examDetails?.time || "Unknown Time",
-      score: exam.score,
-    };
-  });
+      return {
+        examCode: exam.examCode,
+        studentCode: studentCode,
+        examTitle: exam?.title || "Unknown Exam",
+        date: exam?.date || "Unknown Date",
+        time: exam?.time || "Unknown Time",
+        score: e.score,
+      };
+    })
+  );
 
   return sendResponse(res, 200, { scores });
 });
@@ -323,16 +338,18 @@ exports.getStudentScores = asyncHandler(async (req, res, next) => {
 exports.getExamDetails = asyncHandler(async (req, res, next) => {
   const { studentCode, examCode } = req.params;
 
-  const student = await StudentAnswers.findOne({ studentCode });
-  if (!student) throw new ApiError("Student not found", 404);
+  const studentDegrees = await StudentAnswers.findOne({ studentCode });
+  if (!studentDegrees) throw new ApiError("Student not found", 404);
 
-  const examSubmission = student.exams.find(
+  const examSubmission = studentDegrees.exams.find(
     (exam) => exam.examCode === examCode
   );
   if (!examSubmission)
     throw new ApiError("Exam not found for this student", 404);
 
-  const exam = await examsDB.findOne({ examCode });
+  const exam = await examsDB
+    .findOne({ examCode })
+    .select("-validStudents -_id");
   if (!exam) throw new ApiError("Exam details not found", 404);
 
   const detailedAnswers = exam.questions.flatMap((question) =>
@@ -354,10 +371,8 @@ exports.getExamDetails = asyncHandler(async (req, res, next) => {
   );
 
   return sendResponse(res, 200, {
-    examTitle: exam.title,
-    examDate: exam.date,
-    examTime: exam.time,
-    score: examSubmission.score,
+    exam,
     detailedAnswers,
+    score: examSubmission.score,
   });
 });
