@@ -188,6 +188,70 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
     throw new ApiError("Exam not found or you can't enter this exam", 404);
   }
 
+  const isSubmitted = await StudentAnswers.findOne({
+    studentCode,
+    exams: { $elemMatch: { examCode: examCode } },
+  });
+  if (isSubmitted) {
+    throw new ApiError("You don't have the ability to resubmit", 403);
+  }
+
+  const examDateTime = new Date(`${exam.date}T${exam.time}:00Z`);
+
+  const dateNow = new Date();
+  dateNow.setHours(dateNow.getHours() + 2);
+  if (examDateTime > dateNow) {
+    throw new ApiError(`The data of exam  : ${exam.date} ${exam.time}`, 403);
+  }
+
+  let duration = exam.duration;
+  if (duration.includes("H")) {
+    duration = Number(duration.split("H")[0]);
+    examDateTime.setHours(examDateTime.getHours() + duration);
+  } else if (duration.includes("M")) {
+    duration = Number(duration.split("M")[0]);
+    examDateTime.setMinutes(examDateTime.getMinutes() + duration);
+  }
+
+  if (examDateTime < dateNow) {
+    throw new ApiError("The exam is over", 403);
+  }
+
+  const dataSigned = jwt.sign(
+    { examCode: examCode, studentCode: studentCode },
+    process.env.SECRET_KEY_JWT,
+    { expiresIn: exam.duration.toLowerCase() }
+  );
+
+  res.cookie("data", dataSigned, {
+    expires: examDateTime,
+    httpOnly: true,
+    sameSite: "strict",
+  });
+
+  return sendResponse(res, 200, {
+    message: "Login successfully",
+  });
+});
+
+exports.takeExam = asyncHandler(async (req, res, next) => {
+  const { studentCode, examCode } = req.data;
+
+  const student = await usersDB.findOne({ studentCode: studentCode });
+  if (!student) throw new ApiError("Student not found", 404);
+
+  const exam = await examsDB
+    .findOne({
+      $and: [{ examCode: examCode }, { validStudents: { studentCode } }],
+    })
+    .select("-questions.subQuestions.correctAnswer -validStudents");
+
+  if (!exam) {
+    throw new ApiError("Exam not found or you can't enter this exam", 404);
+  }
+
+  console.log(exam);
+
   const examDateTime = new Date(`${exam.date}T${exam.time}:00Z`);
 
   const dateNow = new Date();
@@ -215,18 +279,6 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
   const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
-  const dataSigned = jwt.sign(
-    { data: { examCode: examCode, studentCode: studentCode } },
-    process.env.SECRET_KEY_JWT,
-    { expiresIn: exam.duration.toLowerCase() }
-  );
-
-  res.cookie("data", dataSigned, {
-    expires: examDateTime,
-    httpOnly: true,
-    sameSite: "strict",
-  });
-
   return sendResponse(res, 200, {
     remainingTime: {
       hours,
@@ -242,9 +294,10 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
 exports.submit_exam = asyncHandler(async (req, res, next) => {
   const { studentCode, examCode } = req.query;
   const { answers } = req.body;
-  const { data } = req.data;
+  const studentCode2 = req.data.studentCode;
+  const examCode2 = req.data.examCode;
 
-  if (data.studentCode !== studentCode || data.examCode !== examCode) {
+  if (studentCode2 !== studentCode || examCode2 !== examCode) {
     throw new ApiError(
       "examCode and StudentCode not the same of examCode and StudentCode that logged",
       401

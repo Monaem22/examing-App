@@ -17,6 +17,7 @@ const {
   submit_exam,
   getStudentScores,
   getExamDetails,
+  takeExam,
 } = require("../controllers/exam.controller.js");
 const upload = require("../config/multer.js");
 
@@ -40,6 +41,7 @@ router.patch(
   resetValidStudents
 );
 router.post("/login-to-exam", loginToExam);
+router.get("/take-exam", verifyTokenExam, takeExam);
 router.post("/submit-exam", verifyTokenExam, submit_exam);
 router.get("/student-scores", getStudentScores);
 router.get("/exam-details/:studentCode/:examCode", getExamDetails);
