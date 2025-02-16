@@ -75,7 +75,7 @@ exports.getAllStudents = asyncHandler(async (req, res, next) => {
     { $sort: { sortOrder: 1 } },
     {
       $project: {
-        _id: 0,
+        _id: 1,
         name: 1,
         studentCode: 1,
         grade: 1,
