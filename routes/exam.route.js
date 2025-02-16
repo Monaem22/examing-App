@@ -15,9 +15,10 @@ const {
   addImage,
   loginToExam,
   submit_exam,
-  getStudentScores,
   getExamDetails,
   takeExam,
+  studentScores,
+  loginToDegrees,
 } = require("../controllers/exam.controller.js");
 const upload = require("../config/multer.js");
 
@@ -40,10 +41,13 @@ router.patch(
   checkExamRole,
   resetValidStudents
 );
+//                Degrees
+router.post("/login-to-degrees", loginToDegrees);
+router.get("/student-scores/:studentCode", verifyTokenExam, studentScores);
+router.get("/exam-details/:studentCode/:examCode", getExamDetails);
+//                exams
 router.post("/login-to-exam", loginToExam);
 router.get("/take-exam", verifyTokenExam, takeExam);
 router.post("/submit-exam", verifyTokenExam, submit_exam);
-router.post("/student-scores", getStudentScores);
-router.get("/exam-details/:studentCode/:examCode", getExamDetails);
 
 module.exports = router;

@@ -13,7 +13,7 @@ exports.addExam = asyncHandler(async (req, res, next) => {
     req.body;
 
   const dateNow = new Date();
-  dateNow.setHours(dateNow.getHours() + 2)
+  dateNow.setHours(dateNow.getHours() + 2);
 
   const examDateTime = new Date(`${date}T${time}:00Z`);
 
@@ -220,14 +220,40 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
     throw new ApiError("The exam is over", 403);
   }
 
-  const dataSigned = jwt.sign(
+  const token = jwt.sign(
     { examCode: examCode, studentCode: studentCode },
     process.env.SECRET_KEY_JWT,
-    { expiresIn: exam.duration.toLowerCase() }
+    { expiresIn: duration.toLowerCase() }
   );
 
-  res.cookie("data", dataSigned, {
+  res.cookie("data", token, {
     expires: examDateTime,
+    httpOnly: true,
+    sameSite: "strict",
+  });
+
+  return sendResponse(res, 200, {
+    message: "Login successfully",
+  });
+});
+
+exports.loginToDegrees = asyncHandler(async (req, res, next) => {
+  const { studentCode } = req.body;
+
+  const student = await usersDB.findOne({ studentCode: studentCode });
+  if (!student) throw new ApiError("Student not found", 404);
+
+  const token = jwt.sign(
+    { studentCode: studentCode },
+    process.env.SECRET_KEY_JWT,
+    { expiresIn: process.env.EXPIRE_JWT_AUTH }
+  );
+
+  const expires = new Date();
+  expires.setHours(expires.getHours() + 3);
+
+  res.cookie("data", token, {
+    expires,
     httpOnly: true,
     sameSite: "strict",
   });
@@ -362,30 +388,45 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
   return sendResponse(res, 200, submission);
 });
 
-exports.getStudentScores = asyncHandler(async (req, res, next) => {
-  const { studentCode } = req.body;
+exports.studentScores = asyncHandler(async (req, res, next) => {
+  const { studentCode } = req.params;
+  const student_code = req.data.studentCode;
+  if (studentCode !== student_code) {
+    throw new ApiError(
+      "StudentCode not the same of StudentCode that logged",
+      403
+    );
+  }
 
   const studentDegrees = await StudentAnswers.findOne({ studentCode }).select(
     "exams.examCode exams.score -_id"
   );
-  if (!studentDegrees)
+  if (
+    !studentDegrees ||
+    !studentDegrees.exams ||
+    studentDegrees.exams.length === 0
+  )
     throw new ApiError("No exams found for this student", 404);
 
-  console.log(studentDegrees);
-
   const scores = await Promise.all(
-    studentDegrees.exams.map(async (e) => {
-      const exam = await examsDB.findOne({ examCode: e.examCode });
+    studentDegrees.exams
+      .map(async (e) => {
+        const exam = await examsDB.findOne({ examCode: e.examCode });
 
-      return {
-        examCode: exam.examCode,
-        studentCode: studentCode,
-        examTitle: exam?.title || "Unknown Exam",
-        date: exam?.date || "Unknown Date",
-        time: exam?.time || "Unknown Time",
-        score: e.score,
-      };
-    })
+        if (!exam) {
+          return null;
+        }
+
+        return {
+          examCode: exam.examCode,
+          studentCode: studentCode,
+          examTitle: exam?.title || "Unknown Exam",
+          date: exam?.date || "Unknown Date",
+          time: exam?.time || "Unknown Time",
+          score: e.score,
+        };
+      })
+      .filter(Boolean)
   );
 
   return sendResponse(res, 200, { scores });
