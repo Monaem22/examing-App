@@ -28,25 +28,6 @@ const users_Schema = new mongoose.Schema(
     studentCode: {
       type: String,
     },
-    // studentAnswers
-    exams: [
-      {
-        examCode: { type: String, required: true },
-        isSubmitted: { type: Boolean, default: false }, 
-        answers: [
-          {
-            _id: false,
-            questionId: {
-              type: mongoose.Schema.Types.ObjectId,
-              ref: "exams_table.questions.subQuestions",
-            },
-            studentAnswer: String,
-            result: Boolean,
-          },
-        ],
-        score: { type: Number, default: 0 },
-      },
-    ],
     password: String,
   },
   {
