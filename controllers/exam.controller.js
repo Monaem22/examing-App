@@ -12,9 +12,12 @@ exports.addExam = asyncHandler(async (req, res, next) => {
   const { title, description, grade, date, time, duration, questions } =
     req.body;
 
-  const dataNow = new Date().toISOString();
+  const dateNow = new Date();
+  dateNow.setHours(dateNow.getHours() + 2)
 
-  if (date < dataNow) throw new ApiError("Date is running out", 403);
+  const examDateTime = new Date(`${date}T${time}:00Z`);
+
+  if (examDateTime < dateNow) throw new ApiError("Date is running out", 403);
 
   const validStudents = await usersDB.find({ grade: grade }).select({
     studentCode: 1,
