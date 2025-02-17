@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 
 const studentAnswerSchema = new mongoose.Schema(
   {
-    studentCode: { type: String, required: true, index: true },
+    studentCode: { type: String, required: true, unique: true, index: true },
     exams: [
       {
         examCode: { type: String, required: true },
         answers: [
           {
-            _id : false,
+            _id: false,
             questionId: {
               type: mongoose.Schema.Types.ObjectId,
               ref: "exams_table.questions.subQuestions",

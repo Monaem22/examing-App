@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const studentAnswers = require("./studentAnswers");
 
 const users_Schema = new mongoose.Schema(
   {
@@ -9,17 +10,7 @@ const users_Schema = new mongoose.Schema(
     },
     grade: {
       type: String,
-      enum: [
-        "G4",
-        "G5",
-        "G6",
-        "G7",
-        "G8",
-        "G9",
-        "G10",
-        "G11",
-        "G12",
-      ],
+      enum: ["G4", "G5", "G6", "G7", "G8", "G9", "G10", "G11", "G12"],
     },
     address: String,
     studentMobile: String,
@@ -42,6 +33,14 @@ users_Schema.pre("save", async function (next) {
   const isModified = this.isModified("password");
   if (!isModified) return next(); //Don't re-hash if not modified + it will save empty or default value
   this.password = await bcrypt.hash(this.password, 12);
+  next();
+});
+
+users_Schema.pre("findOneAndDelete", async function (next) {
+  const student = await this.model.findOne(this.getQuery());
+  if (student) {
+    studentAnswers.deleteOne({ studentCode: student.studentCode });
+  }
   next();
 });
 
