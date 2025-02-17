@@ -75,9 +75,11 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
   const { title, description, grade, date, time, duration, questions } =
     req.body;
 
-  const dataNow = new Date().toISOString();
+  const dateNow = new Date().toISOString();
 
-  if (date < dataNow) throw new ApiError("Date is running out", 403);
+  dateNow.setHours(dateNow.getHours() + 2)
+
+  if (date < dateNow) throw new ApiError("Date is running out", 403);
 
   const validStudents = await usersDB.find({ grade: grade }).select({
     studentCode: 1,
@@ -133,6 +135,8 @@ exports.getExam = asyncHandler(async (req, res, next) => {
 exports.deleteExam = asyncHandler(async (req, res, next) => {
   const { examId } = req.params;
   const exam = await examsDB.findByIdAndDelete(examId);
+
+  console.log(exam)
   if (exam.questionImage) {
     await Cloudinary.uploader.destroy(exam.questionImage.public_id);
   }
