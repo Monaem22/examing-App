@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const studentAnswers = require("./studentAnswers.js");
 
 const exams_Schema = new mongoose.Schema(
   {
@@ -50,6 +51,18 @@ const exams_Schema = new mongoose.Schema(
 );
 
 exams_Schema.index({ examCode: 1 }, { unique: true });
+
+exams_Schema.pre("findOneAndDelete", async function (next) {
+  const exam = await this.model.findOne(this.getFilter());
+  if (exam) {
+    await studentAnswers.findOneAndUpdate(
+      { "exams.examCode": exam.examCode },
+      { $pull: { exams: { examCode: exam.examCode } } },
+      { new: true }
+    );
+  }
+  next();
+});
 
 const examsDB = mongoose.model("exams_table", exams_Schema);
 

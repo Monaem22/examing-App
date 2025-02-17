@@ -3,7 +3,7 @@ const {
   verifyToken,
   verifyTokenExam,
 } = require("../middlewares/verifyToken.js");
-const checkExamRole = require("../middlewares/checkRole.js");
+const { checkExamRole } = require("../middlewares/checkRole.js");
 const {
   addExam,
   deleteExam,

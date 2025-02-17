@@ -30,6 +30,3 @@ exports.verifyTokenExam = asyncHandler(async (req, res, next) => {
     throw new ApiError("You are not authenticated", 403);
   }
 });
-
-// module.exports = verifyToken;
-// module.exports = verifyTokenExam;

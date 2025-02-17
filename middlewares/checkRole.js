@@ -5,7 +5,7 @@ const hasAdminRole = (role) => {
   return role === "admin" || role === "super_admin";
 };
 
-const checkAdminRole = asyncHandler(async (req, res, next) => {
+exports.checkAdminRole = asyncHandler(async (req, res, next) => {
   const userRole = req.userRole;
 
   if (!userRole || !hasAdminRole(userRole)) {
@@ -21,7 +21,7 @@ const hasUserRole = (role) => {
   return role === "user" || role === "super_admin";
 };
 
-const checkUserRole = asyncHandler(async (req, res, next) => {
+exports.checkUserRole = asyncHandler(async (req, res, next) => {
   const userRole = req.userRole;
 
   if (!userRole || !hasUserRole(userRole)) {
@@ -37,7 +37,7 @@ const hasExamRole = (role) => {
   return role === "user" || role === "super_admin";
 };
 
-const checkExamRole = asyncHandler(async (req, res, next) => {
+exports.checkExamRole = asyncHandler(async (req, res, next) => {
   const userRole = req.userRole;
 
   if (!userRole || !hasExamRole(userRole)) {
@@ -48,7 +48,3 @@ const checkExamRole = asyncHandler(async (req, res, next) => {
   }
   next();
 });
-
-module.exports = checkAdminRole;
-module.exports = checkUserRole;
-module.exports = checkExamRole;

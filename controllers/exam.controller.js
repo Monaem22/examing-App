@@ -287,8 +287,6 @@ exports.takeExam = asyncHandler(async (req, res, next) => {
     throw new ApiError("Exam not found or you can't enter this exam", 404);
   }
 
-  console.log(exam);
-
   const examDateTime = new Date(`${exam.date}T${exam.time}:00Z`);
 
   const dateNow = new Date();
@@ -436,6 +434,10 @@ exports.studentScores = asyncHandler(async (req, res, next) => {
       })
       .filter(Boolean)
   );
+
+  if (scores.includes(null)) {
+    throw new ApiError("No scores found for this student", 404);
+  }
 
   return sendResponse(res, 200, { scores });
 });

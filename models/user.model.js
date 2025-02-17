@@ -37,9 +37,9 @@ users_Schema.pre("save", async function (next) {
 });
 
 users_Schema.pre("findOneAndDelete", async function (next) {
-  const student = await this.model.findOne(this.getQuery());
+  const student = await this.model.findOne(this.getFilter());
   if (student) {
-    studentAnswers.deleteOne({ studentCode: student.studentCode });
+    await studentAnswers.deleteOne({ studentCode: student.studentCode });
   }
   next();
 });
