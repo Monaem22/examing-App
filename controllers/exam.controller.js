@@ -220,10 +220,11 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
     throw new ApiError("The exam is over", 403);
   }
 
+  console.log(duration)
   const token = jwt.sign(
     { examCode: examCode, studentCode: studentCode },
     process.env.SECRET_KEY_JWT,
-    { expiresIn: duration.toLowerCase() }
+    { expiresIn: exam.duration.toLowerCase() }
   );
 
   res.cookie("data", token, {
