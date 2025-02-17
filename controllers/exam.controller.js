@@ -260,6 +260,7 @@ exports.loginToDegrees = asyncHandler(async (req, res, next) => {
 
   return sendResponse(res, 200, {
     message: "Login successfully",
+    studentCode
   });
 });
 
