@@ -7,7 +7,10 @@ const exams_Schema = new mongoose.Schema(
       required: [true, "exam must have title."],
     },
     description: String,
-    grade: String,
+    grade: {
+      type: String,
+      enum: ["G4", "G5", "G6", "G7", "G8", "G9", "G10", "G11", "G12"],
+    },
     date: String,
     time: String,
     duration: String,
