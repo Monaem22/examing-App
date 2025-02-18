@@ -6,6 +6,7 @@ const sendResponse = require("../utils/response.js");
 const crypto = require("crypto");
 const Cloudinary = require("../config/cloudinary.js");
 const StudentAnswers = require("../models/studentAnswers.js");
+const { gradeMap, gradeOrder } = require("../utils/gradeMap.js");
 const jwt = require("jsonwebtoken");
 
 exports.addExam = asyncHandler(async (req, res, next) => {
@@ -116,13 +117,38 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAllExam = asyncHandler(async (req, res, next) => {
-  const exams = await examsDB.find();
+  const exams = await examsDB.aggregate([
+    {
+      $addFields: {
+        sortOrder: {
+          $indexOfArray: [gradeOrder, "$grade"],
+        },
+      },
+    },
+    { $sort: { sortOrder: 1 } },
+    {
+      $project: {
+        _id: 1,
+        title: 1,
+        grade: 1,
+        date: 1,
+        time: 1,
+        duration: 1,
+        totalQuestions: 1,
+      },
+    },
+  ]);
 
   if (!exams || exams.length === 0) {
     throw new ApiError("No exams found", 404);
   }
 
-  return sendResponse(res, 200, exams);
+  const translatedExams = exams.map((exam) => ({
+    ...exam,
+    grade: gradeMap[exam.grade] || "غير معروف",
+  }));
+
+  return sendResponse(res, 200, translatedExams);
 });
 
 exports.getExam = asyncHandler(async (req, res, next) => {
