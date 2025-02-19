@@ -500,7 +500,7 @@ exports.getExamDetails = asyncHandler(async (req, res, next) => {
         questionId: subQ._id,
         questionText: subQ.questionText,
         correctAnswer: subQ.correctAnswer,
-        studentAnswer: studentAnswerObj?.answer || "Not answered",
+        studentAnswer: studentAnswerObj?.answer || "لم يجب الطالب",
         isCorrect: studentAnswerObj?.result || false,
       };
     })
