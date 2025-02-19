@@ -470,8 +470,6 @@ exports.studentScores = asyncHandler(async (req, res, next) => {
     throw new ApiError("No scores found for this student", 404);
   }
 
-  res.clearCookie("degree");
-
   return sendResponse(res, 200, { scores });
 });
 
