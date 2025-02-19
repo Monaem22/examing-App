@@ -25,10 +25,9 @@ exports.addExam = asyncHandler(async (req, res, next) => {
     _id: 0,
   });
 
-  const totalQuestions = questions.reduce(
-    (acc, q) => acc + q.subQuestions.length,
-    0
-  );
+  const totalQuestions = (questions && Array.isArray(questions)) 
+  ? questions.reduce((acc, q) => acc + (q.subQuestions ? q.subQuestions.length : 0), 0)
+  : 0;
 
   const examCode = crypto.randomBytes(4).toString("hex");
   const exam = await examsDB.create({
@@ -89,10 +88,9 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
     _id: 0,
   });
 
-  const totalQuestions = questions.reduce(
-    (acc, q) => acc + q.subQuestions.length,
-    0
-  );
+  const totalQuestions = (questions && Array.isArray(questions)) 
+  ? questions.reduce((acc, q) => acc + (q.subQuestions ? q.subQuestions.length : 0), 0)
+  : 0;
 
   const updatedExam = await examsDB.findByIdAndUpdate(
     examId,
