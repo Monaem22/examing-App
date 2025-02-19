@@ -1,12 +1,11 @@
-const httpText = require("./httpText");
 const sendResponse = (res, statuscode, data = null) => {
   const type =
     statuscode >= 200 && statuscode < 300
-      ? httpText.SUCCESS
+      ? "Success"
       : statuscode >= 400 && statuscode < 500
-      ? httpText.FAILED
+      ? "Failed"
       : statuscode >= 500
-      ? httpText.ERROR
+      ? "Error"
       : "Unknown";
   return res.status(statuscode).json({ type, statuscode, data: data });
 };

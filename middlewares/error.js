@@ -1,9 +1,7 @@
-const httpText = require("../utils/httpText");
-
 module.exports = (er, req, res, next) => {
   if (process.env.MODE === "dev") {
     return res.status(er.statusCode || 400).json({
-      state: er.httpText || httpText.ERROR,
+      state: er.httpText || "Error",
       statusCode: er.statusCode || 404,
       message: er.message,
       stack: er.stack,

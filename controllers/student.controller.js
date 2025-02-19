@@ -87,7 +87,7 @@ exports.getAllStudents = asyncHandler(async (req, res, next) => {
 
   const translatedStudents = students.map((student) => ({
     ...student,
-    grade: gradeMap[student.grade] || "غير معروف",
+    grade: gradeMap[student.grade],
   }));
 
   return sendResponse(res, 200, translatedStudents);

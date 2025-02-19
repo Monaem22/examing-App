@@ -48,3 +48,17 @@ exports.checkExamRole = asyncHandler(async (req, res, next) => {
   }
   next();
 });
+
+exports.restrictTo = (...roles) =>
+  asyncHandler(async (req, res, next) => {
+    const userRole = req.userRole;
+
+    console.log(roles)
+
+    if (!userRole || !roles.includes(userRole)) {
+      return next(
+        new ApiError("You do not have permission to perform this action", 403)
+      );
+    }
+    next();
+  });

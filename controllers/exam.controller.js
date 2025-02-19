@@ -129,6 +129,7 @@ exports.getAllExam = asyncHandler(async (req, res, next) => {
     {
       $project: {
         _id: 1,
+        examCode: 1,
         title: 1,
         grade: 1,
         date: 1,
@@ -145,7 +146,7 @@ exports.getAllExam = asyncHandler(async (req, res, next) => {
 
   const translatedExams = exams.map((exam) => ({
     ...exam,
-    grade: gradeMap[exam.grade] || "غير معروف",
+    grade: gradeMap[exam.grade],
   }));
 
   return sendResponse(res, 200, translatedExams);
@@ -422,12 +423,16 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
 
 exports.studentScores = asyncHandler(async (req, res, next) => {
   const { studentCode } = req.params;
-  const student_code = req.data.studentCode;
-  if (studentCode !== student_code) {
-    throw new ApiError(
-      "StudentCode not the same of StudentCode that logged",
-      403
-    );
+  const student_code = req.data?.studentCode;
+  const userRole = req.userRole;
+
+  if (!userRole) {
+    if (studentCode !== student_code) {
+      throw new ApiError(
+        "StudentCode not the same of StudentCode that logged",
+        403
+      );
+    }
   }
 
   const studentDegrees = await StudentAnswers.findOne({ studentCode }).select(
@@ -444,10 +449,7 @@ exports.studentScores = asyncHandler(async (req, res, next) => {
     studentDegrees.exams
       .map(async (e) => {
         const exam = await examsDB.findOne({ examCode: e.examCode });
-
-        if (!exam) {
-          return null;
-        }
+        if (!exam) return null;
 
         return {
           examCode: exam.examCode,
@@ -464,6 +466,8 @@ exports.studentScores = asyncHandler(async (req, res, next) => {
   if (scores.includes(null)) {
     throw new ApiError("No scores found for this student", 404);
   }
+
+  res.clearCookie("data");
 
   return sendResponse(res, 200, { scores });
 });
