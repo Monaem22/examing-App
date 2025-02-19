@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   verifyToken,
   verifyTokenExam,
+  verifyTokenDegree,
 } = require("../middlewares/verifyToken.js");
 const { restrictTo } = require("../middlewares/checkRole.js");
 const {
@@ -24,7 +25,7 @@ const upload = require("../config/multer.js");
 
 //                Degrees
 router.post("/login-to-degrees", loginToDegrees);
-router.get("/student-scores/:studentCode", verifyTokenExam, studentScores);
+router.get("/student-scores/:studentCode", verifyTokenDegree, studentScores);
 router.get("/exam-details/:studentCode/:examCode", getExamDetails);
 
 //                exams

@@ -252,13 +252,16 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
     throw new ApiError("The exam is over", 403);
   }
 
+  console.log(exam.duration.toLowerCase());
+  console.log(examDateTime);
+
   const token = jwt.sign(
     { examCode: examCode, studentCode: studentCode },
     process.env.SECRET_KEY_JWT,
     { expiresIn: exam.duration.toLowerCase() }
   );
 
-  res.cookie("data", token, {
+  res.cookie("exam", token, {
     expires: examDateTime,
     httpOnly: true,
     sameSite: "strict",
@@ -286,7 +289,7 @@ exports.loginToDegrees = asyncHandler(async (req, res, next) => {
   const expires = new Date();
   expires.setHours(expires.getHours() + 3);
 
-  res.cookie("data", token, {
+  res.cookie("degree", token, {
     expires,
     httpOnly: true,
     sameSite: "strict",
@@ -299,7 +302,7 @@ exports.loginToDegrees = asyncHandler(async (req, res, next) => {
 });
 
 exports.takeExam = asyncHandler(async (req, res, next) => {
-  const { studentCode, examCode } = req.data;
+  const { studentCode, examCode } = req.exam;
 
   const student = await usersDB.findOne({ studentCode: studentCode });
   if (!student) throw new ApiError("Student not found", 404);
@@ -356,8 +359,8 @@ exports.takeExam = asyncHandler(async (req, res, next) => {
 exports.submit_exam = asyncHandler(async (req, res, next) => {
   const { studentCode, examCode } = req.query;
   const { answers } = req.body;
-  const studentCode2 = req.data.studentCode;
-  const examCode2 = req.data.examCode;
+  const studentCode2 = req.exam.studentCode;
+  const examCode2 = req.exam.examCode;
 
   if (studentCode2 !== studentCode || examCode2 !== examCode) {
     throw new ApiError(
@@ -416,14 +419,14 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
     });
   }
 
-  res.clearCookie("data");
+  res.clearCookie("exam");
 
   return sendResponse(res, 200, submission);
 });
 
 exports.studentScores = asyncHandler(async (req, res, next) => {
   const { studentCode } = req.params;
-  const student_code = req.data?.studentCode;
+  const student_code = req.degree?.studentCode;
   const userRole = req.userRole;
 
   if (!userRole) {
@@ -467,7 +470,7 @@ exports.studentScores = asyncHandler(async (req, res, next) => {
     throw new ApiError("No scores found for this student", 404);
   }
 
-  res.clearCookie("data");
+  res.clearCookie("degree");
 
   return sendResponse(res, 200, { scores });
 });
