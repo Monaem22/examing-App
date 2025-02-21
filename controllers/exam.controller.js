@@ -473,6 +473,7 @@ exports.studentScores = asyncHandler(async (req, res, next) => {
 
 exports.getExamDetails = asyncHandler(async (req, res, next) => {
   const { studentCode, examCode } = req.params;
+  console.log({ studentCode, examCode })
 
   const studentDegrees = await StudentAnswers.findOne({ studentCode });
   if (!studentDegrees) throw new ApiError("Student not found", 404);

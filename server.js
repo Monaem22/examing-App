@@ -27,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compression());
 app.use(helmet());
+app.use(express.static("dist"))
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/exam", examRoute);
@@ -44,3 +45,4 @@ app.listen(process.env.PORT || 2000, process.env.HOST, () => {
     }`
   );
 });
+
