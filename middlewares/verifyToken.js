@@ -8,7 +8,7 @@ exports.verifyToken = asyncHandler(async (req, res, next) => {
   if (req.cookies["accessToken"]) {
     const Auth = req.cookies["accessToken"];
     jwt.verify(Auth, process.env.SECRET_KEY_JWT, async (err, user) => {
-      if (err) throw new ApiError("Token is not valid or expired ", 401);
+      if (err) throw new ApiError("Token is not valid or expired", 401);
       req.userId = user.id;
       req.userRole = user.role;
       return next();
@@ -22,7 +22,7 @@ exports.verifyTokenExam = asyncHandler(async (req, res, next) => {
   if (req.cookies["exam"]) {
     const Auth = req.cookies["exam"];
     jwt.verify(Auth, process.env.SECRET_KEY_JWT, async (err, data) => {
-      if (err) throw new ApiError("Token is not valid or expired ", 401);
+      if (err) throw new ApiError("Token is not valid or expired", 401);
       req.exam = data;
       return next();
     });
@@ -35,7 +35,7 @@ exports.verifyTokenDegree = asyncHandler(async (req, res, next) => {
   if (req.cookies["degree"]) {
     const Auth = req.cookies["degree"];
     jwt.verify(Auth, process.env.SECRET_KEY_JWT, async (err, data) => {
-      if (err) throw new ApiError("Token is not valid or expired ", 401);
+      if (err) throw new ApiError("Token is not valid or expired", 401);
       req.degree = data;
       return next();
     });

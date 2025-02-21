@@ -13,6 +13,5 @@ router.post("/add-admin", adminController.addAdmin);
 router.get("/all-admin", adminController.getAll);
 router.patch("/update/:id", adminController.update);
 router.delete("/:id", adminController.delete);
-router.delete("/", adminController.delete);
 
 module.exports = router;

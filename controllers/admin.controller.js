@@ -93,42 +93,19 @@ exports.update = asyncHandler(async (req, res, next) => {
   return sendResponse(res, 200, "Updated successfully");
 });
 exports.delete = asyncHandler(async (req, res, next) => {
-  const adminRole = req.userRole;
-
+  const { id } = req.params;
   const superAdmin = await adminDB
     .findOne({ role: "super_admin" })
-    .select("userName role");
+    .select("role");
 
-  // delete by ID
-  if (req.params.id) {
-    if (
-      adminRole !== "super_admin" &&
-      req.params.id === superAdmin._id.toString()
-    ) {
-      throw new ApiError(
-        "You do not have the ability to delete the super admin",
-        403
-      );
-    }
-
-    await adminDB.findByIdAndDelete(req.params.id);
-
-    return sendResponse(res, 200, "Deleted successfully");
-  } else {
-    // delete by uerName
-    const { username } = req.query;
-
-    if (adminRole !== "super_admin" && superAdmin.userName === username) {
-      throw new ApiError(
-        "You do not have the ability to delete the super admin",
-        403
-      );
-    }
-    try {
-      await adminDB.findOneAndDelete({ userName: username });
-      return sendResponse(res, 200, "Deleted successfully");
-    } catch (err) {
-      next(new apiError("Not Found", 404));
-    }
+  if (id === superAdmin._id.toString()) {
+    throw new ApiError(
+      "You do not have the ability to delete the super admin",
+      403
+    );
   }
+
+  await adminDB.findByIdAndDelete(id);
+
+  return sendResponse(res, 200, "Deleted successfully");
 });

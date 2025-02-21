@@ -74,7 +74,7 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
   const { examId } = req.params;
   const { title, description, grade, date, time, duration, questions } =
     req.body;
-
+    
   const examDateTime = new Date(`${date}T${time}:00Z`);
 
   const dateNow = new Date();
@@ -88,7 +88,7 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
     _id: 0,
   });
 
-  const totalQuestions = (questions && Array.isArray(questions)) 
+  const totalQuestions = (questions && Array.isArray(questions))
   ? questions.reduce((acc, q) => acc + (q.subQuestions ? q.subQuestions.length : 0), 0)
   : 0;
 
