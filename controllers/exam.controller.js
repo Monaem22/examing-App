@@ -250,9 +250,6 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
     throw new ApiError("The exam is over", 403);
   }
 
-  console.log(exam.duration.toLowerCase());
-  console.log(examDateTime);
-
   const token = jwt.sign(
     { examCode: examCode, studentCode: studentCode },
     process.env.SECRET_KEY_JWT,
@@ -473,7 +470,6 @@ exports.studentScores = asyncHandler(async (req, res, next) => {
 
 exports.getExamDetails = asyncHandler(async (req, res, next) => {
   const { studentCode, examCode } = req.params;
-  console.log({ studentCode, examCode })
 
   const studentDegrees = await StudentAnswers.findOne({ studentCode });
   if (!studentDegrees) throw new ApiError("Student not found", 404);
@@ -493,8 +489,6 @@ exports.getExamDetails = asyncHandler(async (req, res, next) => {
     question.subQuestions.map((subQ) => {
       const studentAnswerObj = examSubmission.answers.find(
         (ans) => ans.questionId.toString() === subQ._id.toString(),
-        console.log("subQ : ", subQ),
-        console.log("subQ question : ", subQ.questionText)
       );
 
       return {
