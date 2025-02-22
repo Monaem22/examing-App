@@ -60,7 +60,7 @@ exports.getAll = asyncHandler(async (req, res, next) => {
 
   const admins = await adminDB.find(query).select("userName role");
 
-  if (admins || admins.length === 0) {
+  if (!admins || admins.length === 0) {
     throw new ApiError("لا يوجد مسئولين", 403);
   }
 
