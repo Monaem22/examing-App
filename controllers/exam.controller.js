@@ -475,6 +475,7 @@ exports.studentScores = asyncHandler(async (req, res, next) => {
           examTitle: exam?.title || "Unknown Exam",
           date: exam?.date || "Unknown Date",
           time: exam?.time || "Unknown Time",
+          degree : exam.degree,
           score: e.score,
         };
       })

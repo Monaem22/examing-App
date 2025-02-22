@@ -78,10 +78,7 @@ exports.update = asyncHandler(async (req, res, next) => {
     adminRole !== "super_admin" &&
     req.params.id === superAdmin._id.toString()
   ) {
-    throw new ApiError(
-      "ليس لديك القدره علي تعديل المسئول الفائق",
-      403
-    );
+    throw new ApiError("ليس لديك القدره علي تعديل المسئول الفائق", 403);
   }
 
   const admin = await adminDB.findByIdAndUpdate(
@@ -100,10 +97,7 @@ exports.delete = asyncHandler(async (req, res, next) => {
     .select("role");
 
   if (id === superAdmin._id.toString()) {
-    throw new ApiError(
-      "ليس لديك القدره علي تعديل المسئول الفائق",
-      403
-    );
+    throw new ApiError("ليس لديك القدره علي تعديل المسئول الفائق", 403);
   }
 
   await adminDB.findByIdAndDelete(id);
