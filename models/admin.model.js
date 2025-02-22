@@ -6,7 +6,7 @@ const admin_schema = new mongoose.Schema(
     userName: {
       type: String,
       required: [true, "username number has been required"],
-      unique: [true, "admin username number must be unique"],
+      unique: [true, "هذا المستخدم موجود بالفعل"],
     },
     password: {
       type: String,

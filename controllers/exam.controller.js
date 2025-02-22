@@ -18,16 +18,21 @@ exports.addExam = asyncHandler(async (req, res, next) => {
 
   const examDateTime = new Date(`${date}T${time}:00Z`);
 
-  if (examDateTime < dateNow) throw new ApiError("Date is running out", 403);
+  if (examDateTime < dateNow)
+    throw new ApiError("هذا الوقت من الماضي اجعله في المستقبل ", 403);
 
   const validStudents = await usersDB.find({ grade: grade }).select({
     studentCode: 1,
     _id: 0,
   });
 
-  const totalQuestions = (questions && Array.isArray(questions)) 
-  ? questions.reduce((acc, q) => acc + (q.subQuestions ? q.subQuestions.length : 0), 0)
-  : 0;
+  const totalQuestions =
+    questions && Array.isArray(questions)
+      ? questions.reduce(
+          (acc, q) => acc + (q.subQuestions ? q.subQuestions.length : 0),
+          0
+        )
+      : 0;
 
   const examCode = crypto.randomBytes(4).toString("hex");
   const exam = await examsDB.create({
@@ -74,23 +79,28 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
   const { examId } = req.params;
   const { title, description, grade, date, time, duration, questions } =
     req.body;
-    
+
   const examDateTime = new Date(`${date}T${time}:00Z`);
 
   const dateNow = new Date();
 
   dateNow.setHours(dateNow.getHours() + 2);
 
-  if (examDateTime < dateNow) throw new ApiError("Date is running out", 403);
+  if (examDateTime < dateNow)
+    throw new ApiError("هذا الوقت من الماضي اجعله في المستقبل ", 403);
 
   const validStudents = await usersDB.find({ grade: grade }).select({
     studentCode: 1,
     _id: 0,
   });
 
-  const totalQuestions = (questions && Array.isArray(questions))
-  ? questions.reduce((acc, q) => acc + (q.subQuestions ? q.subQuestions.length : 0), 0)
-  : 0;
+  const totalQuestions =
+    questions && Array.isArray(questions)
+      ? questions.reduce(
+          (acc, q) => acc + (q.subQuestions ? q.subQuestions.length : 0),
+          0
+        )
+      : 0;
 
   const updatedExam = await examsDB.findByIdAndUpdate(
     examId,
@@ -109,7 +119,7 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
     { new: true, runValidators: true }
   );
 
-  if (!updatedExam) throw new ApiError("Exam not found", 404);
+  if (!updatedExam) throw new ApiError("هذا الامتحان غير موجود", 404);
 
   return sendResponse(res, 200, updatedExam);
 });
@@ -139,7 +149,7 @@ exports.getAllExam = asyncHandler(async (req, res, next) => {
   ]);
 
   if (!exams || exams.length === 0) {
-    throw new ApiError("No exams found", 404);
+    throw new ApiError("لا يوجد امتحانات", 404);
   }
 
   const translatedExams = exams.map((exam) => ({
@@ -154,7 +164,7 @@ exports.getExam = asyncHandler(async (req, res, next) => {
   const { examId } = req.params;
   const exam = await examsDB.findById(examId);
 
-  if (!exam) throw new ApiError("Exam not found", 404);
+  if (!exam) throw new ApiError("هذا الامتحان غير موجود", 404);
 
   return sendResponse(res, 200, exam);
 });
@@ -163,7 +173,7 @@ exports.deleteExam = asyncHandler(async (req, res, next) => {
   const { examId } = req.params;
   const exam = await examsDB.findByIdAndDelete(examId);
 
-  if (!exam) throw new ApiError("Exam not found", 404);
+  if (!exam) throw new ApiError("هذا الامتحان غير موجود", 404);
 
   if (exam.questionImage.public_id) {
     await Cloudinary.uploader.destroy(exam.questionImage.public_id);
@@ -195,7 +205,7 @@ exports.deleteImage = asyncHandler(async (req, res, next) => {
 exports.resetValidStudents = asyncHandler(async (req, res, next) => {
   const { examId } = req.params;
   const exam = await examsDB.findById(examId);
-  if (!exam) throw new ApiError("Exam not found", 404);
+  if (!exam) throw new ApiError("هذا الامتحان غير موجود", 404);
 
   const validStudents = await usersDB.find({ grade: exam.grade }).select({
     studentCode: 1,
@@ -211,14 +221,17 @@ exports.resetValidStudents = asyncHandler(async (req, res, next) => {
 exports.loginToExam = asyncHandler(async (req, res, next) => {
   const { studentCode, examCode } = req.body;
   const student = await usersDB.findOne({ studentCode: studentCode });
-  if (!student) throw new ApiError("Student not found", 404);
+  if (!student) throw new ApiError("هذا الطالب غير موجود", 404);
 
   const exam = await examsDB.findOne({
     $and: [{ examCode: examCode }, { validStudents: { studentCode } }],
   });
 
   if (!exam) {
-    throw new ApiError("Exam not found or you can't enter this exam", 404);
+    throw new ApiError(
+      "هذا الامتحان غير موجود او ليس مسموح لك بأن تدخل هذا الامتحان",
+      404
+    );
   }
 
   const isSubmitted = await StudentAnswers.findOne({
@@ -226,7 +239,7 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
     exams: { $elemMatch: { examCode: examCode } },
   });
   if (isSubmitted) {
-    throw new ApiError("You don't have the ability to resubmit", 403);
+    throw new ApiError("ليس لديك القدره لإعاده الامتحان مره اخري", 403);
   }
 
   const examDateTime = new Date(`${exam.date}T${exam.time}:00Z`);
@@ -234,7 +247,7 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
   const dateNow = new Date();
   dateNow.setHours(dateNow.getHours() + 2);
   if (examDateTime > dateNow) {
-    throw new ApiError(`The data of exam  : ${exam.date} ${exam.time}`, 403);
+    throw new ApiError(`${exam.date} ${exam.time} : معاد الامتحان`, 403);
   }
 
   let duration = exam.duration;
@@ -247,7 +260,7 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
   }
 
   if (examDateTime < dateNow) {
-    throw new ApiError("The exam is over", 403);
+    throw new ApiError("انتهي الامتحان", 403);
   }
 
   const token = jwt.sign(
@@ -273,7 +286,7 @@ exports.loginToDegrees = asyncHandler(async (req, res, next) => {
   const { studentCode } = req.body;
 
   const student = await usersDB.findOne({ studentCode: studentCode });
-  if (!student) throw new ApiError("Student not found", 404);
+  if (!student) throw new ApiError("هذا الطالب غير موجود", 404);
 
   const token = jwt.sign(
     { studentCode: studentCode },
@@ -300,7 +313,7 @@ exports.takeExam = asyncHandler(async (req, res, next) => {
   const { studentCode, examCode } = req.exam;
 
   const student = await usersDB.findOne({ studentCode: studentCode });
-  if (!student) throw new ApiError("Student not found", 404);
+  if (!student) throw new ApiError("هذا الطالب غير موجود", 404);
 
   const exam = await examsDB
     .findOne({
@@ -309,7 +322,10 @@ exports.takeExam = asyncHandler(async (req, res, next) => {
     .select("-questions.subQuestions.correctAnswer -validStudents");
 
   if (!exam) {
-    throw new ApiError("Exam not found or you can't enter this exam", 404);
+    throw new ApiError(
+      "هذا الامتحان غير موجود او ليس مسموح لك بأن تدخل هذا الامتحان",
+      404
+    );
   }
 
   const examDateTime = new Date(`${exam.date}T${exam.time}:00Z`);
@@ -317,7 +333,7 @@ exports.takeExam = asyncHandler(async (req, res, next) => {
   const dateNow = new Date();
   dateNow.setHours(dateNow.getHours() + 2);
   if (examDateTime > dateNow) {
-    throw new ApiError(`The data of exam  : ${exam.date} ${exam.time}`, 403);
+    throw new ApiError(`${exam.date} ${exam.time} : معاد الامتحان`, 403);
   }
 
   let duration = exam.duration;
@@ -330,7 +346,7 @@ exports.takeExam = asyncHandler(async (req, res, next) => {
   }
 
   if (examDateTime < dateNow) {
-    throw new ApiError("The exam is over", 403);
+    throw new ApiError("انتهي الامتحان", 403);
   }
 
   const remainingTime = examDateTime - dateNow; // time + duration - date.now
@@ -359,7 +375,7 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
 
   if (studentCode2 !== studentCode || examCode2 !== examCode) {
     throw new ApiError(
-      "examCode and StudentCode not the same of examCode and StudentCode that logged",
+      "كود الامتحان والطالب ليسا نفس كود الامتحان والطالب الذي تم التسجيل بهم",
       401
     );
   }
@@ -369,17 +385,20 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
     exams: { $elemMatch: { examCode: examCode } },
   });
   if (isSubmitted) {
-    throw new ApiError("You don't have the ability to resubmit", 403);
+    throw new ApiError("ليس لديك القدره لإعاده الامتحان مره اخري", 403);
   }
 
   const student = await usersDB.findOne({ studentCode: studentCode });
-  if (!student) throw new ApiError("Student not found", 404);
+  if (!student) throw new ApiError("هذا الطالب غير موجود", 404);
 
   const exam = await examsDB.findOne({
     $and: [{ examCode: examCode }, { validStudents: { studentCode } }],
   });
   if (!exam) {
-    throw new ApiError("Exam not found or you can't enter this exam", 404);
+    throw new ApiError(
+      "هذا الامتحان غير موجود او ليس مسموح لك بأن تدخل هذا الامتحان",
+      404
+    );
   }
 
   let score = 0;
@@ -428,6 +447,7 @@ exports.studentScores = asyncHandler(async (req, res, next) => {
     if (studentCode !== student_code) {
       throw new ApiError(
         "StudentCode not the same of StudentCode that logged",
+        "كود الطالب ليس نفس كود الطالب الذي تم التسجيل به",
         403
       );
     }
@@ -441,7 +461,7 @@ exports.studentScores = asyncHandler(async (req, res, next) => {
     !studentDegrees.exams ||
     studentDegrees.exams.length === 0
   )
-    throw new ApiError("No exams found for this student", 404);
+    throw new ApiError("لا يوجد امتحانات لهذا الطالب", 404);
 
   const scores = await Promise.all(
     studentDegrees.exams
@@ -462,7 +482,7 @@ exports.studentScores = asyncHandler(async (req, res, next) => {
   );
 
   if (scores.includes(null)) {
-    throw new ApiError("No scores found for this student", 404);
+    throw new ApiError("لا يوجد نتائج لهذا الطالب", 404);
   }
 
   return sendResponse(res, 200, { scores });
@@ -472,23 +492,24 @@ exports.getExamDetails = asyncHandler(async (req, res, next) => {
   const { studentCode, examCode } = req.params;
 
   const studentDegrees = await StudentAnswers.findOne({ studentCode });
-  if (!studentDegrees) throw new ApiError("Student not found", 404);
+  if (!studentDegrees) throw new ApiError("لا يوجد هذا الطالب في قائمه النتائج", 404);
 
   const examSubmission = studentDegrees.exams.find(
     (exam) => exam.examCode === examCode
   );
-  if (!examSubmission)
-    throw new ApiError("Exam not found for this student", 404);
+  if (!examSubmission) {
+    throw new ApiError("لا يوجد نتائج لهذا الطالب", 404);
+  }
 
   const exam = await examsDB
     .findOne({ examCode })
     .select("-validStudents -_id");
-  if (!exam) throw new ApiError("Exam details not found", 404);
+  if (!exam) throw new ApiError("هذا الامتحان غير موجود", 404);
 
   const detailedAnswers = exam.questions.flatMap((question) =>
     question.subQuestions.map((subQ) => {
       const studentAnswerObj = examSubmission.answers.find(
-        (ans) => ans.questionId.toString() === subQ._id.toString(),
+        (ans) => ans.questionId.toString() === subQ._id.toString()
       );
 
       return {

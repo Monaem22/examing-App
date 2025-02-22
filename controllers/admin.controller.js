@@ -8,10 +8,9 @@ const adminDB = require("../models/admin.model.js");
 const dotenv = require("dotenv");
 dotenv.config();
 
-let admin;
 exports.addAdmin = asyncHandler(async (req, res, next) => {
   const { userName, password, role } = req.body;
-  admin = await adminDB.create({
+  const admin = await adminDB.create({
     userName,
     password,
     role,
@@ -20,20 +19,18 @@ exports.addAdmin = asyncHandler(async (req, res, next) => {
 });
 exports.login = asyncHandler(async (req, res, next) => {
   const { userName, password } = req.body;
-  if (!userName || !password) {
-    throw new apiError("All fields are required", 403);
-  } else {
-    admin = await adminDB.findOne({ userName });
-    if (!admin) {
-      throw new apiError("Invalid username", 404);
-    }
-    const isMatch = await bcrypt.compare(password, admin.password);
-    if (!isMatch) {
-      throw new apiError("Invalid password", 404);
-    }
+
+  const admin = await adminDB.findOne({ userName });
+  if (!admin) {
+    throw new apiError("هذا المسئول غير موجود", 404);
   }
+  const isMatch = await bcrypt.compare(password, admin.password);
+  if (!isMatch) {
+    throw new apiError("كلمه السر خاطئه", 404);
+  }
+
   const token = jwt.sign(
-    { id: admin._id, userName: admin.userName, role: admin.role },
+    { id: admin._id, role: admin.role },
     process.env.SECRET_KEY_JWT,
     {
       expiresIn: process.env.EXPIRE_JWT_AUTH,
@@ -63,6 +60,10 @@ exports.getAll = asyncHandler(async (req, res, next) => {
 
   const admins = await adminDB.find(query).select("userName role");
 
+  if (admins || admins.length === 0) {
+    throw new ApiError("لا يوجد مسئولين", 403);
+  }
+
   return sendResponse(res, 200, admins);
 });
 exports.update = asyncHandler(async (req, res, next) => {
@@ -78,7 +79,7 @@ exports.update = asyncHandler(async (req, res, next) => {
     req.params.id === superAdmin._id.toString()
   ) {
     throw new ApiError(
-      "You do not have the ability to modify the super admin",
+      "ليس لديك القدره علي تعديل المسئول الفائق",
       403
     );
   }
@@ -88,7 +89,7 @@ exports.update = asyncHandler(async (req, res, next) => {
     { userName, password, role },
     { new: true, runValidators: true }
   );
-  if (!admin) throw new ApiError("Admin not found", 404);
+  if (!admin) throw new ApiError("هذا المسئول غير موجود", 404);
 
   return sendResponse(res, 200, "Updated successfully");
 });
@@ -100,7 +101,7 @@ exports.delete = asyncHandler(async (req, res, next) => {
 
   if (id === superAdmin._id.toString()) {
     throw new ApiError(
-      "You do not have the ability to delete the super admin",
+      "ليس لديك القدره علي تعديل المسئول الفائق",
       403
     );
   }

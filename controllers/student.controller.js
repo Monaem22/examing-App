@@ -7,13 +7,6 @@ const { gradeMap, gradeOrder } = require("../utils/gradeMap.js");
 
 exports.addStudent = asyncHandler(async (req, res, next) => {
   const { name, grade, studentMobile, parentMobile } = req.body;
-  const userId = req.userId;
-
-  if (!userId) throw new ApiError("User not found", 404);
-
-  if (!name || !grade || !studentMobile || !parentMobile) {
-    throw new ApiError("All fields must me be filled", 403);
-  }
 
   const studentCode = crypto.randomBytes(4).toString("hex");
 
@@ -36,8 +29,6 @@ exports.updateStudent = asyncHandler(async (req, res, next) => {
   const { name, grade, studentMobile, parentMobile } = req.body;
   const { studentId } = req.params;
 
-  if (!req.body) throw new ApiError("No changes", 400);
-
   const studentDoc = await usersDB.findByIdAndUpdate(
     studentId,
     {
@@ -49,7 +40,7 @@ exports.updateStudent = asyncHandler(async (req, res, next) => {
     { new: true, runValidators: true }
   );
 
-  if (!studentDoc) throw new ApiError("Student not found", 404);
+  if (!studentDoc) throw new ApiError("هذا الطالب غير موجود", 404);
 
   return sendResponse(res, 200, "Student updated successfully");
 });
@@ -58,7 +49,7 @@ exports.deleteStudent = asyncHandler(async (req, res, next) => {
   const { studentId } = req.params;
 
   const student = await usersDB.findByIdAndDelete(studentId);
-  if (!student) throw new ApiError("Student not found", 404);
+  if (!student) throw new ApiError("هذا طالب غير موجود", 404);
 
   return sendResponse(res, 200, "Student deleted successfully");
 });
@@ -95,6 +86,6 @@ exports.getAllStudents = asyncHandler(async (req, res, next) => {
 
 exports.getOneStudent = asyncHandler(async (req, res, next) => {
   const student = await usersDB.findById(req.params.id);
-  if (!student) throw new ApiError("Student not found", 404);
+  if (!student) throw new ApiError("هذا الطالب غير موجود", 404);
   return sendResponse(res, 200, student);
 });
