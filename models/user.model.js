@@ -12,12 +12,19 @@ const users_Schema = new mongoose.Schema(
       type: String,
       enum: ["G4", "G5", "G6", "G7", "G8", "G9", "G10", "G11", "G12"],
     },
-    address: String,
-    studentMobile: String,
-    parentMobile: String,
-    group: String,
+    studentMobile: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    parentMobile: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     studentCode: {
       type: String,
+      required: true,
     },
     password: String,
   },
@@ -32,7 +39,7 @@ users_Schema.index({ studentCode: 1 }, { unique: true });
 users_Schema.pre("save", async function (next) {
   const isModified = this.isModified("password");
   if (!isModified) return next(); //Don't re-hash if not modified + it will save empty or default value
-  this.password = await bcrypt.hash(this.password, 12);
+  this.password = bcrypt.hash(this.password, 12);
   next();
 });
 
