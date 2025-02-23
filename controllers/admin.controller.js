@@ -84,7 +84,11 @@ exports.update = asyncHandler(async (req, res, next) => {
 
   const admin = await adminDB.findByIdAndUpdate(
     req.params.id,
-    { userName, password, role },
+    {
+      userName,
+      password,
+      role: adminRole === "super_admin" ? "super_admin" : role,
+    },
     { new: true, runValidators: true }
   );
   if (!admin) throw new ApiError("هذا المسئول غير موجود", 404);

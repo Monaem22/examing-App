@@ -77,8 +77,7 @@ exports.addImage = asyncHandler(async (req, res, next) => {
 
 exports.updateExam = asyncHandler(async (req, res, next) => {
   const { examId } = req.params;
-  const { title, description, grade, date, time, duration, questions } =
-    req.body;
+  const { title, description, date, time, duration, questions } = req.body;
 
   const examDateTime = new Date(`${date}T${time}:00Z`);
 
@@ -107,7 +106,6 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
     {
       title,
       description,
-      grade,
       date,
       time,
       duration: duration.toUpperCase(),
@@ -477,7 +475,7 @@ exports.studentScores = asyncHandler(async (req, res, next) => {
           examTitle: exam?.title || "Unknown Exam",
           date: exam?.date || "Unknown Date",
           time: exam?.time || "Unknown Time",
-          degree : exam.degree,
+          degree: exam.degree,
           score: e.score,
         };
       })
@@ -495,7 +493,8 @@ exports.getExamDetails = asyncHandler(async (req, res, next) => {
   const { studentCode, examCode } = req.params;
 
   const studentDegrees = await StudentAnswers.findOne({ studentCode });
-  if (!studentDegrees) throw new ApiError("لا يوجد هذا الطالب في قائمه النتائج", 404);
+  if (!studentDegrees)
+    throw new ApiError("لا يوجد هذا الطالب في قائمه النتائج", 404);
 
   const examSubmission = studentDegrees.exams.find(
     (exam) => exam.examCode === examCode
