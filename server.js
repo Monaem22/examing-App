@@ -16,7 +16,7 @@ dbConnection();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:5173"],
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -27,7 +27,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compression());
 app.use(helmet());
-app.use(express.static("dist"))
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/exam", examRoute);
@@ -45,4 +44,3 @@ app.listen(process.env.PORT || 2000, process.env.HOST, () => {
     }`
   );
 });
-

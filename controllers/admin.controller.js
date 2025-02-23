@@ -41,6 +41,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   res.cookie("accessToken", `${token}`, {
     expires: expirationDate,
     httpOnly: true,
+    secure: process.env.MODE === "prod",
     sameSite: "strict",
   }),
     sendResponse(res, 200, {

@@ -272,6 +272,7 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
   res.cookie("exam", token, {
     expires: examDateTime,
     httpOnly: true,
+    secure: process.env.MODE === "prod",
     sameSite: "strict",
   });
 
@@ -300,6 +301,7 @@ exports.loginToDegrees = asyncHandler(async (req, res, next) => {
   res.cookie("degree", token, {
     expires,
     httpOnly: true,
+    secure: process.env.MODE === "prod",
     sameSite: "strict",
   });
 
