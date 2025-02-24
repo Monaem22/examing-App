@@ -69,7 +69,7 @@ exports.getAll = asyncHandler(async (req, res, next) => {
 });
 exports.update = asyncHandler(async (req, res, next) => {
   const adminRole = req.userRole;
-  let { userName, role, password } = req.body;
+  let { userName, role} = req.body;
 
   const superAdmin = await adminDB
     .findOne({ role: "super_admin" })
@@ -86,7 +86,6 @@ exports.update = asyncHandler(async (req, res, next) => {
     req.params.id,
     {
       userName,
-      password,
       role: adminRole === "super_admin" ? "super_admin" : role,
     },
     { new: true, runValidators: true }
