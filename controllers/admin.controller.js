@@ -69,7 +69,7 @@ exports.getAll = asyncHandler(async (req, res, next) => {
 });
 exports.update = asyncHandler(async (req, res, next) => {
   const adminRole = req.userRole;
-  let { userName, role} = req.body;
+  let { userName, role } = req.body;
 
   const superAdmin = await adminDB
     .findOne({ role: "super_admin" })
@@ -82,11 +82,15 @@ exports.update = asyncHandler(async (req, res, next) => {
     throw new ApiError("ليس لديك القدره علي تعديل المسئول الفائق", 403);
   }
 
+  if (adminRole === "super_admin" && role !== "super_admin") {
+    throw new ApiError("لا يمكنك تغير دورك", 403);
+  }
+
   const admin = await adminDB.findByIdAndUpdate(
     req.params.id,
     {
       userName,
-      role: adminRole === "super_admin" ? "super_admin" : role,
+      role,
     },
     { new: true, runValidators: true }
   );

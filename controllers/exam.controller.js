@@ -85,10 +85,13 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
 
   dateNow.setHours(dateNow.getHours() + 2);
 
-  if (examDateTime < dateNow)
+  if (examDateTime < dateNow) {
     throw new ApiError("هذا الوقت من الماضي اجعله في المستقبل ", 403);
+  }
+  const exam = await examsDB.findById(examId);
+  if (!exam) throw new ApiError("هذا الامتحان غير موجود", 404);
 
-  const validStudents = await usersDB.find({ grade: grade }).select({
+  const validStudents = await usersDB.find({ grade: exam.grade }).select({
     studentCode: 1,
     _id: 0,
   });
@@ -101,25 +104,18 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
         )
       : 0;
 
-  const updatedExam = await examsDB.findByIdAndUpdate(
-    examId,
-    {
-      title,
-      description,
-      date,
-      time,
-      duration: duration.toUpperCase(),
-      totalQuestions,
-      degree: totalQuestions,
-      questions,
-      validStudents,
-    },
-    { new: true, runValidators: true }
-  );
+  exam.time = title;
+  exam.description = description;
+  exam.date = date;
+  exam.duration = duration.toUpperCase();
+  exam.totalQuestions = totalQuestions;
+  exam.degree = totalQuestions;
+  exam.questions = questions;
+  exam.validStudents = validStudents;
 
-  if (!updatedExam) throw new ApiError("هذا الامتحان غير موجود", 404);
+  await exam.save();
 
-  return sendResponse(res, 200, updatedExam);
+  return sendResponse(res, 200, exam);
 });
 
 exports.getAllExam = asyncHandler(async (req, res, next) => {
