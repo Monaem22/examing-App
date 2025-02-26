@@ -33,12 +33,21 @@ const exams_Schema = new mongoose.Schema(
     },
     questions: [
       {
-        question_title: String,
+        question_title: {
+          type: String,
+          required : [true , "لا يمكن اضافه او تعديل امتحان به خانات فارغه"]
+        },
         subQuestions: [
           {
             _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
-            questionText: String,
-            correctAnswer: String,
+            questionText: {
+              type: String,
+              required : [true , "لا يمكن اضافه او تعديل امتحان به خانات فارغه"]
+            },
+            correctAnswer: {
+              type: String,
+              required : [true , "لا يمكن اضافه او تعديل امتحان به خانات فارغه"]
+            },
             options: [String],
           },
         ],
