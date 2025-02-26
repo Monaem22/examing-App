@@ -38,9 +38,9 @@ app.use("/api/exam", examRoute);
 //   return next(new apiError(`cant find this route ${req.originalUrl}`, 404));
 // });
 
-app.get('/*', (req, res) => {
+app.get("/*", (req, res) => {
   console.log(req.url);
-  const pathF=path.join(__dirname, 'dist', 'index.html');
+  const pathF = path.join(__dirname, "dist", "index.html");
   res.sendFile(pathF); // Or 'build'
 });
 

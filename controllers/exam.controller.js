@@ -77,7 +77,7 @@ exports.addImage = asyncHandler(async (req, res, next) => {
 
 exports.updateExam = asyncHandler(async (req, res, next) => {
   const { examId } = req.params;
-  const { title, description, date, time, duration, questions, grade } =
+  const { title, description, date, time, duration, questions } =
     req.body;
 
   const examDateTime = new Date(`${date}T${time}:00Z`);
