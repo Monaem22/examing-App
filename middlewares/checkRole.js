@@ -6,9 +6,7 @@ exports.restrictTo = (...roles) =>
     const userRole = req.userRole;
 
     if (!userRole || !roles.includes(userRole)) {
-      return next(
-        new ApiError("ليس لديك الإذن للقيام بهذا الإجراء", 403)
-      );
+      return next(new ApiError("ليس لديك الإذن للقيام بهذا الإجراء", 403));
     }
     next();
   });
