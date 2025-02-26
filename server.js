@@ -39,7 +39,6 @@ app.use("/api/exam", examRoute);
 // });
 
 app.get("/*", (req, res) => {
-  console.log(req.url);
   const pathF = path.join(__dirname, "dist", "index.html");
   res.sendFile(pathF); // Or 'build'
 });

@@ -9,8 +9,6 @@ const StudentAnswers = require("../models/studentAnswers.js");
 const { gradeMap, gradeOrder } = require("../utils/gradeMap.js");
 const jwt = require("jsonwebtoken");
 
-const shuffle = (array) => array.sort(() => Math.random() - 0.5);
-
 exports.addExam = asyncHandler(async (req, res, next) => {
   const { title, description, grade, date, time, duration, questions } =
     req.body;
@@ -353,16 +351,6 @@ exports.takeExam = asyncHandler(async (req, res, next) => {
   const hours = Math.floor(remainingTime / (1000 * 60 * 60));
   const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
-  let shuffledQuestions = shuffle(exam.questions);
-
-  shuffledQuestions = shuffledQuestions.map((q) => ({
-    ...q,
-    subQuestions: shuffle(q.subQuestions),
-  }));
-  console.log(shuffledQuestions);
-
-  exam.questions = shuffledQuestions;
 
   return sendResponse(res, 200, {
     remainingTime: {
