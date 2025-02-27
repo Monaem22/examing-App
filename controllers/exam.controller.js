@@ -291,7 +291,7 @@ exports.loginToDegrees = asyncHandler(async (req, res, next) => {
   );
 
   const expires = new Date();
-  expires.setHours(expires.getHours() + 3);
+  expires.setHours(expires.getHours() + 2);
 
   res.cookie("degree", token, {
     expires,

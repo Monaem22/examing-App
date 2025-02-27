@@ -49,6 +49,7 @@ exports.login = asyncHandler(async (req, res, next) => {
       admin: true,
       role: admin.role,
       superAdmin: admin.role === "super_admin",
+      tokenExpiry: process.env.EXPIRE_JWT_AUTH,
     });
 });
 exports.getAll = asyncHandler(async (req, res, next) => {
