@@ -6,7 +6,7 @@ const dbConnection = () => {
     .connect(process.env.DB_url, { serverSelectionTimeoutMS: 50000 })
     .then(() => {
       console.log("Connected to MongoDB");
-      superAdmin()
+      superAdmin();
     })
     .catch((error) => console.error("Error connecting to MongoDB:", error));
 };
