@@ -4,6 +4,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const compression = require("compression");
 const cookieParser = require("cookie-parser");
+const mongoSanitize = require("express-mongo-sanitize");
 const dbConnection = require("./config/DB_connection");
 const apiError = require("./utils/apiError.js");
 const adminRoute = require("./routes/admin.route.js");
@@ -23,6 +24,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(mongoSanitize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
