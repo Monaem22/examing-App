@@ -228,10 +228,6 @@ exports.loginToExam = asyncHandler(async (req, res, next) => {
       404
     );
   }
-  
-  if (req.cookies.exam) {
-    throw new ApiError("ليس لديك الحق بعاده تسجيل الدخول لنفس الامتحان", 403);
-  }
 
   const isSubmitted = await StudentAnswers.findOne({
     studentCode,
