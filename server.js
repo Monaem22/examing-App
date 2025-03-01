@@ -29,14 +29,14 @@ app.use(cookieParser());
 app.use(compression());
 app.use(helmet());
 
-app.use(express.static("dist"));
+// app.use(express.static("dist"));
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/exam", examRoute);
 
-app.all("*", (req, res, next) => {
-  return next(new apiError(`cant find this route ${req.originalUrl}`, 404));
-});
+// app.all("*", (req, res, next) => {
+//   return next(new apiError(`cant find this route ${req.originalUrl}`, 404));
+// });
 
 // app.get("/*", (req, res) => {
 //   const pathF = path.join(__dirname, "dist", "index.html");
