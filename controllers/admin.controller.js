@@ -38,6 +38,8 @@ exports.login = asyncHandler(async (req, res, next) => {
   );
   const expirationDate = new Date();
   expirationDate.setHours(expirationDate.getHours() + 2);
+  console.log(process.env.MODE)
+  console.log(token)
   res.cookie("accessToken", `${token}`, {
     expires: expirationDate,
     httpOnly: true,
