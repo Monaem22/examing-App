@@ -5,6 +5,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 exports.verifyToken = asyncHandler(async (req, res, next) => {
+  console.log(req.url)
+  console.log(req.headers.cookie)
   if (req.cookies["accessToken"]) {
     const Auth = req.cookies["accessToken"];
     jwt.verify(Auth, process.env.SECRET_KEY_JWT, async (err, user) => {
