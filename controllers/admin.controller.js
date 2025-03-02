@@ -43,7 +43,6 @@ exports.login = asyncHandler(async (req, res, next) => {
     httpOnly: true,
     secure: process.env.MODE === "prod",
     sameSite: "None",
-    domain: "https://examing-app-production-330a.up.railway.app"
   }),
   console.log("Cookie Headers:", res.getHeaders()["set-cookie"]);
     sendResponse(res, 200, {
