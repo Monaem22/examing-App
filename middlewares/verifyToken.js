@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 exports.verifyToken = asyncHandler(async (req, res, next) => {
-  console.log(req.url)
+  console.log(req.originalUrl)
   console.log(req.headers.cookie)
   if (req.cookies["accessToken"]) {
     const Auth = req.cookies["accessToken"];
