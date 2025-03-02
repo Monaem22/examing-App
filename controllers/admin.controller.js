@@ -42,7 +42,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     expires: expirationDate,
     httpOnly: true,
     secure: process.env.MODE === "prod",
-    sameSite: "strict",
+    sameSite: "none",
   }),
     sendResponse(res, 200, {
       msg: "login successfully",
