@@ -23,10 +23,13 @@ app.use(
       "https://mahmoud-ebrahim-elazony.vercel.app",
       "https://mahmoud-ebrahim-elazony.netlify.app",
     ],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE" , "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE" ],
+    exposedHeaders: ["Set-Cookie"],
     credentials: true,
   })
 );
+
+app.options("*", cors());
 
 app.use(mongoSanitize());
 app.use(express.json());
