@@ -18,7 +18,10 @@ dbConnection();
 
 app.use(
   cors({
-    origin:"https://mahmoud-ebrahim-elazony.vercel.app",
+    origin: [
+      "https://mahmoud-ebrahim-elazony.vercel.app",
+      "https://mahmoud-ebrahim-elazony.netlify.app",
+    ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization", "Set-Cookie"],
     credentials: true,
