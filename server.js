@@ -24,7 +24,6 @@ app.use(
       "https://mahmoud-ebrahim-elazony.netlify.app",
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization", "Set-Cookie"],
     credentials: true,
   })
 );
