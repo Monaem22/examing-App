@@ -19,6 +19,7 @@ dbConnection();
 app.use(
   cors({
     origin: [
+      "https://examing-app-production-330a.up.railway.app",
       "https://mahmoud-ebrahim-elazony.vercel.app",
       "https://mahmoud-ebrahim-elazony.netlify.app",
     ],
@@ -35,7 +36,7 @@ app.use(cookieParser());
 app.use(compression());
 app.use(helmet());
 
-// app.use(express.static("dist"));
+app.use(express.static("dist"));
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/exam", examRoute);
@@ -44,10 +45,10 @@ app.use("/api/exam", examRoute);
 //   return next(new apiError(`cant find this route ${req.originalUrl}`, 404));
 // });
 
-// app.get("/*", (req, res) => {
-//   const pathF = path.join(__dirname, "dist", "index.html");
-//   res.sendFile(pathF); // Or 'build'
-// });
+app.get("/*", (req, res) => {
+  const pathF = path.join(__dirname, "dist", "index.html");
+  res.sendFile(pathF); // Or 'build'
+});
 
 app.use(error);
 
