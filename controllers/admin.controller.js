@@ -42,7 +42,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     expires: expirationDate,
     httpOnly: true,
     secure: process.env.MODE === "prod",
-    sameSite: "strict",
+    sameSite: "None",
     // domain : "https://examing-app-production-330a.up.railway.app"
   }),
   console.log("Cookie Headers:", res.getHeaders()["set-cookie"]);
