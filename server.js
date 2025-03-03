@@ -18,10 +18,7 @@ dbConnection();
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://mahmoud-ebrahim-elazony.vercel.app",
-    ],
+    origin:"https://mahmoud-ebrahim-elazony.vercel.app",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization", "Set-Cookie"],
     credentials: true,
