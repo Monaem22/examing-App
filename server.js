@@ -20,6 +20,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
+      "http://localhost:2000",
       "https://examing-app-production-330a.up.railway.app",
       "https://mahmoud-ebrahim-elazony.vercel.app",
       "https://mahmoud-ebrahim-elazony.netlify.app",
