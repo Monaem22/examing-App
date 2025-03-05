@@ -22,7 +22,6 @@ app.use(
       "http://localhost:5173",
       "http://localhost:2000",
       "http://16.24.182.227",
-      "https://16.24.182.227",
       "https://examing-app-production-330a.up.railway.app",
       "https://mahmoud-ebrahim-elazony.vercel.app",
     ],
