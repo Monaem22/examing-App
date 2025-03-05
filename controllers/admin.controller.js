@@ -42,9 +42,8 @@ exports.login = asyncHandler(async (req, res, next) => {
     expires: expirationDate,
     httpOnly: true,
     secure: process.env.MODE === "prod",
-    sameSite: "None",
+    sameSite: "strict",
   }),
-  console.log("Cookie Headers:", res.getHeaders()["set-cookie"]);
     sendResponse(res, 200, {
       msg: "login successfully",
       admin: true,
