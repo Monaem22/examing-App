@@ -6,7 +6,6 @@ const compression = require("compression");
 const cookieParser = require("cookie-parser");
 const mongoSanitize = require("express-mongo-sanitize");
 const dbConnection = require("./config/DB_connection");
-const apiError = require("./utils/apiError.js");
 const adminRoute = require("./routes/admin.route.js");
 const userRoute = require("./routes/user.route.js");
 const examRoute = require("./routes/exam.route.js");
@@ -20,17 +19,12 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "http://localhost:2000",
       "http://16.24.182.227",
-      "https://examing-app-production-330a.up.railway.app",
-      "https://mahmoud-ebrahim-elazony.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE" ],
     credentials: true,
   })
 );
-
-app.options("*", cors());
 
 app.use(mongoSanitize());
 app.use(express.json());
@@ -39,19 +33,9 @@ app.use(cookieParser());
 app.use(compression());
 app.use(helmet());
 
-app.use(express.static("dist"));
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/exam", examRoute);
-
-// app.all("*", (req, res, next) => {
-//   return next(new apiError(`cant find this route ${req.originalUrl}`, 404));
-// });
-
-app.get("/*", (req, res) => {
-  const pathF = path.join(__dirname, "dist", "index.html");
-  res.sendFile(pathF); // Or 'build'
-});
 
 app.use(error);
 
