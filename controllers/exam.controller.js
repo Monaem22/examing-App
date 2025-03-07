@@ -86,7 +86,7 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
 
   const exam = await examsDB.findById(examId);
   if (!exam) throw new ApiError("هذا الامتحان غير موجود", 404);
-  
+
   if (new Date(`${exam.date}T${exam.time}:00Z`) < dateNow) {
     throw new ApiError("لا يمكنك تعديل الامتحان بعد بدايته", 401);
   }
@@ -435,8 +435,6 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
       ],
     });
   }
-
-  res.clearCookie("exam");
 
   return sendResponse(res, 200, submission);
 });
