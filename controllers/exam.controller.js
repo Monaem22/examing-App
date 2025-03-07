@@ -436,6 +436,8 @@ exports.submit_exam = asyncHandler(async (req, res, next) => {
     });
   }
 
+  res.clearCookie("exam")
+
   return sendResponse(res, 200, submission);
 });
 
