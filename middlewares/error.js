@@ -8,9 +8,9 @@ module.exports = (er, req, res, next) => {
       all_Error: [er],
     });
   } else {
-    res.status(er.statusCode).json({
+    res.status(er.statusCode || 400).json({
       state: er.httpText,
-      statusCode: er.statusCode,
+      statusCode: er.statusCode || 404,
       message: er.message,
     });
   }

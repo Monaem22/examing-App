@@ -18,7 +18,7 @@ exports.addExam = asyncHandler(async (req, res, next) => {
 
   const examDateTime = new Date(`${date}T${time}:00Z`);
 
-  if (examDateTime < dateNow){
+  if (examDateTime < dateNow) {
     throw new ApiError("هذا الوقت من الماضي اجعله في المستقبل ", 403);
   }
 
@@ -80,17 +80,22 @@ exports.updateExam = asyncHandler(async (req, res, next) => {
   const { examId } = req.params;
   const { title, description, date, time, duration, questions } = req.body;
 
-  const examDateTime = new Date(`${date}T${time}:00Z`);
-
   const dateNow = new Date();
 
   dateNow.setHours(dateNow.getHours() + 2);
 
+  const exam = await examsDB.findById(examId);
+  if (!exam) throw new ApiError("هذا الامتحان غير موجود", 404);
+  
+  if (new Date(`${exam.date}T${exam.time}:00Z`) < dateNow) {
+    throw new ApiError("لا يمكنك تعديل الامتحان بعد بدايته", 401);
+  }
+
+  const examDateTime = new Date(`${date}T${time}:00Z`);
+
   if (examDateTime < dateNow) {
     throw new ApiError("هذا الوقت من الماضي اجعله في المستقبل ", 403);
   }
-  const exam = await examsDB.findById(examId);
-  if (!exam) throw new ApiError("هذا الامتحان غير موجود", 404);
 
   const validStudents = await usersDB.find({ grade: exam.grade }).select({
     studentCode: 1,

@@ -18,7 +18,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "http://15.185.186.166",
+      "https://mahmoud-ebrahim-elazony.tech",
+      "https://www.mahmoud-ebrahim-elazony.tech",
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE" ],
     credentials: true,
