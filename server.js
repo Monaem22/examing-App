@@ -10,7 +10,6 @@ const adminRoute = require("./routes/admin.route.js");
 const userRoute = require("./routes/user.route.js");
 const examRoute = require("./routes/exam.route.js");
 const error = require("./middlewares/error");
-const path = require("path");
 const app = express();
 dotenv.config();
 dbConnection();

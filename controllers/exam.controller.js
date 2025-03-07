@@ -18,8 +18,9 @@ exports.addExam = asyncHandler(async (req, res, next) => {
 
   const examDateTime = new Date(`${date}T${time}:00Z`);
 
-  if (examDateTime < dateNow)
+  if (examDateTime < dateNow){
     throw new ApiError("هذا الوقت من الماضي اجعله في المستقبل ", 403);
+  }
 
   const validStudents = await usersDB.find({ grade: grade }).select({
     studentCode: 1,
